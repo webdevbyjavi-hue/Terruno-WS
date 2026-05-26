@@ -1,0 +1,288 @@
+/* =================================================================
+   MexicoMap.css
+   Scope: .mexmap — all rules are prefixed to avoid collisions
+================================================================= */
+
+/* ── Container ──────────────────────────────────────────────── */
+.mexmap {
+  position: relative;
+  width: 100%;
+  user-select: none;
+  -webkit-user-select: none;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* ── SVG ────────────────────────────────────────────────────── */
+.mexmap__svg {
+  display: block;
+  width: 100%;
+  height: auto; /* maintains viewBox aspect ratio */
+}
+
+/* ── State paths ─────────────────────────────────────────────── */
+.mexmap__path {
+  cursor: default;
+  transition: fill 0.12s ease;
+  outline: none;
+}
+
+/* Only show pointer cursor when the map is interactive */
+.mexmap__path[role='button'] {
+  cursor: pointer;
+}
+
+/* Keyboard focus ring for accessibility */
+.mexmap__path:focus-visible {
+  outline: 2px solid #4a90d9;
+  outline-offset: 2px;
+}
+
+/* ── Loading / error overlay ─────────────────────────────────── */
+.mexmap__overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 4rem 2rem;
+  text-align: center;
+  color: #6b7280;
+  min-height: 200px;
+}
+
+.mexmap__overlay--error {
+  color: #b91c1c;
+}
+
+.mexmap__overlay-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.mexmap__overlay-text {
+  font-size: 0.825rem;
+}
+
+.mexmap__overlay-hint {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  font-style: italic;
+  margin-top: 0.25rem;
+}
+
+/* ── Spinner ─────────────────────────────────────────────────── */
+.mexmap__spinner {
+  display: block;
+  width: 28px;
+  height: 28px;
+  border: 2.5px solid #e5e7eb;
+  border-top-color: #6b7280;
+  border-radius: 50%;
+  animation: mexmap-spin 0.7s linear infinite;
+  margin-bottom: 0.25rem;
+}
+
+@keyframes mexmap-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Tooltip ─────────────────────────────────────────────────── */
+.mexmap__tooltip {
+  position: absolute;
+  pointer-events: none;
+  z-index: 10;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.12),
+    0 1px 4px  rgba(0, 0, 0, 0.06);
+  padding: 10px 14px;
+  min-width: 160px;
+  max-width: 200px;
+
+  /* Smooth entry */
+  animation: mexmap-tt-in 0.1s ease;
+}
+
+@keyframes mexmap-tt-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1);    }
+}
+
+/* State name — bold headline */
+.mexmap__tt-name {
+  margin: 0 0 2px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #111827;
+  line-height: 1.3;
+}
+
+/* Abbreviation — small caps label */
+.mexmap__tt-abbr {
+  margin: 0 0 8px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #9ca3af;
+}
+
+/* Value row — separated by a hairline */
+.mexmap__tt-value {
+  margin: 0;
+  padding-top: 7px;
+  border-top: 1px solid #f3f4f6;
+  font-size: 0.8rem;
+  color: #374151;
+}
+
+.mexmap__tt-value--empty {
+  color: #d1d5db;
+}
+
+/* =================================================================
+   Map + cards layout
+================================================================= */
+
+.mexmap__layout {
+  display: flex;
+  align-items: center;
+}
+
+.mexmap__map-wrap {
+  flex: 0 0 60%;
+  min-width: 0;
+}
+
+/* =================================================================
+   Region info cards
+================================================================= */
+
+.mexmap__cards {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.25rem;
+  padding: 0.5rem 0.5rem 0.5rem 3rem;
+}
+
+.mexmap__region-card {
+  background: #f1edde;
+  border: 1px solid rgba(69, 68, 17, 0.15);
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem 1rem;
+}
+
+.mexmap__card-label {
+  display: inline-block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #797853;
+  background: rgba(121, 120, 83, 0.12);
+  padding: 0.18em 0.7em;
+  border-radius: 9999px;
+  margin-bottom: 0.5rem;
+}
+
+.mexmap__card-name {
+  margin: 0 0 0.1rem;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #454411;
+  line-height: 1.2;
+}
+
+.mexmap__card-subtitle {
+  margin: 0 0 0.75rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #797853;
+}
+
+.mexmap__card-desc {
+  margin: 0 0 0.875rem;
+  font-family: 'Aileron', 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  line-height: 1.65;
+  color: rgba(69, 68, 17, 0.82);
+}
+
+.mexmap__card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 0.875rem;
+}
+
+.mexmap__card-tag {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+  background: #797853;
+  padding: 0.2em 0.8em;
+  border-radius: 9999px;
+}
+
+.mexmap__card-stat {
+  margin: 0;
+  padding-top: 0.7rem;
+  border-top: 1px solid rgba(69, 68, 17, 0.12);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(69, 68, 17, 0.55);
+}
+
+/* =================================================================
+   Arrow overlay
+================================================================= */
+
+.mexmap__pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mexmap-pulse 2.4s ease-out infinite;
+}
+
+@keyframes mexmap-pulse {
+  0%   { opacity: 0.45; transform: scale(1);   }
+  70%  { opacity: 0;    transform: scale(2.6); }
+  100% { opacity: 0;    transform: scale(2.6); }
+}
+
+/* =================================================================
+   Responsive — stack vertically on small screens
+================================================================= */
+
+@media (max-width: 640px) {
+  .mexmap__layout {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .mexmap__map-wrap {
+    flex: none;
+    width: 100%;
+  }
+
+  .mexmap__cards {
+    padding: 0;
+    width: 100%;
+  }
+
+  .mexmap__arrow-overlay {
+    display: none;
+  }
+}

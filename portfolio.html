@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Portfolio — Terruno Wine & Spirits</title>
+  <meta name="description" content="Explore Terruno's curated portfolio of fine Mexican wines from Cuna de Tierra and Concierto Enológico — award-winning whites, rosés, and reds." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream:     #f1edde;
+      --sage:      #797853;
+      --forest:    #454411;
+      --border:    rgba(69,68,17,0.15);
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-full: 9999px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--cream);
+      color: var(--forest);
+      overflow-x: hidden;
+    }
+
+    /* ── Nav ── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: transparent;
+      backdrop-filter: none;
+      border-bottom: 1px solid transparent;
+      transition: background .4s ease, backdrop-filter .4s ease, border-color .4s ease, box-shadow .4s ease;
+      padding: 0 2rem;
+    }
+    .nav.scrolled {
+      background: rgba(241,237,222,0.96);
+      backdrop-filter: blur(10px);
+      border-color: var(--border);
+      box-shadow: 0 2px 24px rgba(69,68,17,.08);
+    }
+    .nav__progress {
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 2px;
+      width: 0%;
+      background: var(--forest);
+      opacity: 0;
+      transition: width .08s linear, opacity .4s ease;
+    }
+    .nav.scrolled .nav__progress { opacity: 1; }
+    .nav__inner {
+      max-width: 1200px; margin: 0 auto; height: 72px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav__logo-img { height: 40px; }
+    .nav__links { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
+    .nav__link {
+      font-size: .7rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--forest); text-decoration: none; transition: color .2s;
+    }
+    .nav__link:hover, .nav__link.active { color: var(--sage); }
+    .nav__cta {
+      background: var(--forest); color: #fff;
+      font-size: .7rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+      padding: .75rem 1.5rem; border-radius: var(--radius-full);
+      text-decoration: none; transition: background .2s, transform .2s;
+    }
+    .nav__cta:hover { background: var(--sage); transform: translateY(-1px); }
+    .nav__hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .nav__hamburger span { display: block; width: 22px; height: 1.5px; background: var(--forest); transition: all .3s; }
+    .nav__mobile {
+      display: none; position: fixed; inset: 0; z-index: 99;
+      background: var(--cream); flex-direction: column; align-items: center;
+      justify-content: center; gap: 2rem;
+    }
+    .nav__mobile.open { display: flex; }
+    .nav__mobile-link {
+      font-size: .8rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--forest); text-decoration: none;
+    }
+    .nav__mobile-cta { background: var(--forest); color: #fff; padding: .875rem 2rem; border-radius: var(--radius-full); }
+    @media (max-width: 768px) { .nav__links { display: none; } .nav__hamburger { display: flex; } }
+
+    /* ── Hero background ── */
+    .hero-section-bg {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg-layer {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center 30%;
+      background-repeat: no-repeat;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    .hero-bg-layer--cuna {
+      background-image: url('assets/cuna-de-tierra/cuna-de-tierra.avif');
+      opacity: 1;
+    }
+    .hero-bg-layer--concierto {
+      background-image: url('assets/concierto-enologico/concierto-enologico.jpeg');
+    }
+    .hero-bg-layer::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(241,237,222,0.45) 0%,
+        rgba(241,237,222,0.72) 45%,
+        rgba(241,237,222,0.92) 75%,
+        rgba(241,237,222,1)   100%
+      );
+    }
+    .hero-section-bg > .winery-switch,
+    .hero-section-bg > .hero,
+    .hero-section-bg > .filters {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Winery Switcher ── */
+    .winery-switch {
+      display: flex; justify-content: center;
+      padding: 7rem 2rem 2.5rem;
+    }
+    .winery-switch__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      background: rgba(69,68,17,.03);
+    }
+    .winery-btn {
+      display: flex; flex-direction: column; align-items: center;
+      padding: 1rem 2.75rem; border: none; background: transparent;
+      cursor: pointer; transition: background .28s ease; gap: .18rem;
+    }
+    .winery-btn + .winery-btn { border-left: 1.5px solid var(--border); }
+    .winery-btn.active { background: var(--forest); }
+    .winery-btn__name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem; font-weight: 700;
+      color: var(--forest); transition: color .28s; white-space: nowrap;
+    }
+    .winery-btn.active .winery-btn__name { color: #fff; }
+    .winery-btn__loc {
+      font-size: .58rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--sage); transition: color .28s; white-space: nowrap;
+    }
+    .winery-btn.active .winery-btn__loc { color: rgba(255,255,255,.6); }
+    @media (max-width: 540px) {
+      .winery-switch__inner { flex-direction: column; border-radius: var(--radius-lg); }
+      .winery-btn + .winery-btn { border-left: none; border-top: 1.5px solid var(--border); }
+      .winery-btn { padding: .85rem 2rem; }
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 1.5rem 2rem 4rem;
+      text-align: center; max-width: 780px; margin: 0 auto;
+    }
+    .label {
+      font-size: .68rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--sage); display: block; margin-bottom: .75rem;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 5.5vw, 3.8rem);
+      font-weight: 700; line-height: 1.12; color: var(--forest);
+      margin-bottom: 1.25rem;
+    }
+    .hero p {
+      font-size: .95rem; line-height: 1.85; color: var(--sage);
+      max-width: 580px; margin: 0 auto 2rem;
+    }
+    .hero-stats {
+      display: inline-flex; gap: 2.5rem; padding: 1rem 2.5rem;
+      border: 1px solid var(--border); border-radius: var(--radius-full);
+      background: rgba(69,68,17,.04);
+    }
+    .hero-stat { text-align: center; }
+    .hero-stat__num {
+      font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700;
+      color: var(--forest); display: block;
+    }
+    .hero-stat__txt {
+      font-size: .58rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--sage);
+    }
+
+    /* ── Filter bar ── */
+    .filters {
+      display: flex; justify-content: center; gap: .5rem; flex-wrap: wrap;
+      padding: 0 2rem 3.5rem;
+    }
+    .filter-btn {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .63rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+      padding: .6rem 1.4rem; border-radius: var(--radius-full);
+      border: 1.5px solid var(--border); background: transparent;
+      color: var(--forest); cursor: pointer; transition: all .22s ease;
+    }
+    .filter-btn:hover { border-color: var(--forest); background: var(--forest); color: #fff; }
+    .filter-btn.active { background: var(--forest); border-color: var(--forest); color: #fff; }
+    .filter-btn[hidden] { display: none; }
+
+    /* ── Wine Carousel ── */
+    .wine-carousel { max-width: 1200px; margin: 0 auto; padding: 0 2rem 6rem; }
+    .wine-carousel__viewport { overflow: hidden; }
+    .wine-carousel__track {
+      display: flex; gap: 1.75rem;
+      transition: transform .55s cubic-bezier(.25,.46,.45,.94);
+      will-change: transform;
+    }
+    .wine-carousel__track .wine-card {
+      flex: 0 0 var(--card-w, 360px);
+      animation: none;
+    }
+    .wine-carousel__nav {
+      display: flex; align-items: center; justify-content: center;
+      gap: 1.25rem; margin-top: 2rem;
+    }
+    .carousel-arrow {
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 1.5px solid var(--border); background: transparent;
+      color: var(--forest); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all .2s;
+    }
+    .carousel-arrow:hover:not(:disabled) { background: var(--forest); color: #fff; border-color: var(--forest); }
+    .carousel-arrow:disabled { opacity: 0.3; cursor: default; }
+    .carousel-dots { display: flex; gap: .45rem; align-items: center; }
+    .carousel-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--border); border: none; cursor: pointer;
+      padding: 0; transition: all .22s;
+    }
+    .carousel-dot.active { background: var(--forest); width: 20px; border-radius: 3px; }
+    .carousel-counter {
+      font-size: .62rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--sage);
+      min-width: 55px; text-align: center;
+    }
+
+    /* ── Card ── */
+    .wine-card {
+      background: var(--cream); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); overflow: hidden; cursor: pointer;
+      transition: transform .3s ease, box-shadow .3s ease;
+      animation: cardIn .45s ease both;
+      display: flex; flex-direction: column;
+    }
+    .card-body { flex: 1; }
+    .wine-card:hover { transform: translateY(-7px); box-shadow: 0 24px 56px rgba(69,68,17,.13); }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-head {
+      padding: 1.75rem 1.75rem 1.5rem;
+      position: relative; overflow: hidden;
+    }
+    .card-head--white     { background: linear-gradient(140deg, #a07820 0%, #c9a53e 55%, #b08c2e 100%); }
+    .card-head--rose      { background: linear-gradient(140deg, #8c3848 0%, #c06878 55%, #a05060 100%); }
+    .card-head--red       { background: linear-gradient(140deg, #2e0b18 0%, #5c1a30 55%, #3c1020 100%); }
+    .card-head--fortified { background: linear-gradient(140deg, #4a2008 0%, #7a4818 55%, #603010 100%); }
+
+    .card-head::after, .card-head::before {
+      content: ''; position: absolute; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.1);
+    }
+    .card-head::after  { width: 120px; height: 120px; bottom: -40px; right: -20px; }
+    .card-head::before { width: 70px;  height: 70px;  bottom: -10px; right: 30px; background: rgba(255,255,255,.04); }
+
+    .card-badge {
+      display: inline-block;
+      font-size: .52rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+      padding: .25rem .7rem; border-radius: var(--radius-full);
+      background: rgba(255,255,255,.18); color: rgba(255,255,255,.88);
+      border: 1px solid rgba(255,255,255,.22); margin-bottom: .9rem;
+    }
+    .card-winery {
+      font-size: .58rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+      color: rgba(255,255,255,.6); margin-bottom: .3rem;
+    }
+    .card-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.55rem; font-weight: 700; color: #fff; line-height: 1.2;
+    }
+    .card-sub {
+      font-family: 'Playfair Display', serif;
+      font-style: italic; font-size: .9rem; color: rgba(255,255,255,.7);
+      margin-top: .2rem;
+    }
+    .card-body { padding: 1.5rem 1.75rem 1rem; }
+    .card-grapes {
+      font-family: 'Playfair Display', serif; font-style: italic;
+      font-size: .85rem; color: var(--sage); margin-bottom: .6rem; line-height: 1.5;
+    }
+    .card-region {
+      font-size: .6rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--sage); display: flex; align-items: center; gap: .35rem;
+    }
+    .card-divider { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
+    .card-award { font-size: .7rem; color: var(--forest); line-height: 1.55; display: flex; align-items: flex-start; gap: .4rem; }
+    .card-foot {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 1.75rem 1.5rem;
+    }
+    .card-production {
+      font-size: .58rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--sage); opacity: .7;
+    }
+    .card-explore {
+      font-size: .6rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--forest); display: flex; align-items: center; gap: .3rem; transition: gap .2s;
+    }
+    .wine-card:hover .card-explore { gap: .55rem; }
+
+    /* ── Modal ── */
+    .modal-bg {
+      position: fixed; inset: 0; z-index: 300;
+      background: rgba(69,68,17,.62); backdrop-filter: blur(5px);
+      display: flex; align-items: center; justify-content: center; padding: 1.5rem;
+      opacity: 0; pointer-events: none; transition: opacity .3s ease;
+    }
+    .modal-bg.open { opacity: 1; pointer-events: all; }
+    .modal {
+      background: var(--cream); border-radius: var(--radius-lg);
+      max-width: 840px; width: 100%; max-height: 90vh; overflow-y: auto;
+      transform: translateY(28px) scale(.97);
+      transition: transform .38s cubic-bezier(.34,1.45,.64,1);
+      scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+    }
+    .modal-bg.open .modal { transform: translateY(0) scale(1); }
+
+    .m-head { padding: 2.5rem 2.75rem 2rem; position: relative; }
+    .m-close {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1.5px solid var(--border); background: transparent;
+      cursor: pointer; font-size: 1rem; color: var(--forest);
+      display: flex; align-items: center; justify-content: center; transition: all .2s;
+    }
+    .m-close:hover { background: var(--forest); color: #fff; border-color: var(--forest); }
+    .m-meta { display: flex; align-items: center; gap: .75rem; margin-bottom: .9rem; }
+    .m-pill {
+      font-size: .58rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+      padding: .28rem .75rem; border-radius: var(--radius-full); color: #fff;
+    }
+    .m-pill--white     { background: #a07820; }
+    .m-pill--rose      { background: #a05060; }
+    .m-pill--red       { background: #5c1a30; }
+    .m-pill--fortified { background: #7a4818; }
+    .m-winery { font-size: .62rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--sage); }
+    .m-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.75rem,4vw,2.75rem); font-weight: 700; color: var(--forest); line-height: 1.1;
+    }
+    .m-subtitle { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.15rem; color: var(--sage); margin-top: .2rem; }
+
+    .m-facts {
+      display: flex; gap: 2rem; flex-wrap: wrap;
+      padding: 1.5rem 2.75rem;
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+    .m-fact { display: flex; flex-direction: column; gap: .18rem; }
+    .m-fact-lbl { font-size: .52rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--sage); }
+    .m-fact-val { font-family: 'Playfair Display', serif; font-size: .9rem; color: var(--forest); }
+
+    .m-tasting { padding: 2.25rem 2.75rem; }
+    .m-section-lbl { font-size: .62rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--sage); margin-bottom: 1.5rem; }
+    .taste-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; }
+    @media (max-width: 560px) { .taste-grid { grid-template-columns: 1fr; } }
+    .taste-item { display: flex; flex-direction: column; align-items: center; text-align: center; gap: .65rem; }
+    .taste-disc {
+      width: 105px; height: 105px; border-radius: 50%;
+      background: rgba(69,68,17,.05); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center; font-size: 1.7rem;
+    }
+    .taste-title { font-family: 'Playfair Display', serif; font-size: .9rem; font-weight: 700; color: var(--forest); }
+    .taste-text { font-size: .77rem; color: var(--sage); line-height: 1.65; }
+
+    .m-section { padding: 0 2.75rem 2rem; }
+    .m-section hr { border: none; border-top: 1px solid var(--border); margin-bottom: 1.75rem; }
+    .m-section h4 { font-size: .62rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--sage); margin-bottom: .75rem; }
+    .m-section p, .m-section li { font-size: .84rem; line-height: 1.85; color: var(--forest); }
+    .m-section ul { list-style: none; display: flex; flex-direction: column; gap: .35rem; }
+    .m-section ul li::before { content: '—'; margin-right: .5rem; color: var(--sage); }
+
+    .award-row { display: flex; align-items: flex-start; gap: .5rem; margin-bottom: .45rem; }
+    .award-row span { font-size: .82rem; line-height: 1.55; color: var(--forest); }
+    .details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    @media (max-width: 560px) { .details-grid { grid-template-columns: 1fr; } }
+
+    @media (max-width: 640px) {
+      .m-head { padding: 2rem 1.5rem 1.5rem; }
+      .m-facts { padding: 1.25rem 1.5rem; gap: 1rem; }
+      .m-tasting { padding: 1.75rem 1.5rem; }
+      .m-section { padding: 0 1.5rem 1.5rem; }
+    }
+
+    /* ── Bottle image card ── */
+    .card-bottle {
+      position: relative;
+      background: radial-gradient(ellipse at 50% 40%, #f9f7ef 0%, #f1edde 60%, #e8e3cc 100%);
+      height: 320px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-bottle img {
+      height: 85%;
+      width: 85%;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+      transition: transform .5s ease;
+    }
+    .wine-card:hover .card-bottle img { transform: scale(1.06) translateY(-6px); }
+    .card-bottle__label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.5rem 1.75rem 1.25rem;
+      background: linear-gradient(to top, rgba(232,227,204,.98) 0%, rgba(241,237,222,0) 100%);
+    }
+    .card-bottle__label .card-badge {
+      background: rgba(69,68,17,.1);
+      border-color: rgba(69,68,17,.2);
+      color: rgba(69,68,17,.85);
+    }
+    .card-bottle__label .card-winery { color: rgba(121,120,83,.8); }
+    .card-bottle__label .card-name   { color: #454411; font-size: 1.35rem; }
+    .card-bottle__label .card-sub    { color: rgba(69,68,17,.6); }
+
+    /* ── Modal hero (image + info two-column) ── */
+    .m-hero {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      overflow: hidden;
+      min-height: 340px;
+    }
+    .m-img {
+      background: radial-gradient(ellipse at 50% 40%, #f9f7ef 0%, #f1edde 60%, #e8e3cc 100%);
+      display: flex; align-items: center; justify-content: center;
+      padding: 2rem 1.5rem;
+      border-right: 1px solid var(--border);
+    }
+    .m-img img {
+      width: 100%;
+      max-height: 380px;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+    }
+    .m-info {
+      padding: 2.5rem 2.75rem 2rem;
+      position: relative;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .m-info .m-facts {
+      border: none;
+      border-top: 1px solid var(--border);
+      padding: 1.25rem 0 0;
+      margin-top: 1.5rem;
+    }
+    @media (max-width: 640px) {
+      .m-hero { grid-template-columns: 1fr; min-height: auto; }
+      .m-img { min-height: 220px; border-right: none; border-bottom: 1px solid var(--border); }
+      .m-info { padding: 1.75rem 1.5rem 1.5rem; justify-content: flex-start; }
+      .m-info .m-facts { padding: 1rem 0 0; margin-top: 1rem; }
+    }
+
+    /* ── Scroll reveal ── */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .55s ease, transform .55s ease; }
+    .reveal.vis { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="index.html">
+        <img src="assets/logo-transparent.png" alt="Terruno Wine & Spirits" class="nav__logo-img" />
+      </a>
+      <ul class="nav__links">
+        <li><a href="index.html#story"   class="nav__link">Our Story</a></li>
+        <li><a href="portfolio.html"     class="nav__link active">Portfolio</a></li>
+        <li><a href="index.html#team"    class="nav__link">Team</a></li>
+        <li><a href="index.html#markets" class="nav__link">Markets</a></li>
+        <li><a href="index.html#contact" class="nav__cta">Partner With Us</a></li>
+      </ul>
+      <button class="nav__hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav__progress" id="navProgress"></div>
+  </nav>
+
+  <div class="nav__mobile" id="mobileNav">
+    <a href="index.html#story"   class="nav__mobile-link">Our Story</a>
+    <a href="portfolio.html"     class="nav__mobile-link">Portfolio</a>
+    <a href="index.html#team"    class="nav__mobile-link">Team</a>
+    <a href="index.html#markets" class="nav__mobile-link">Markets</a>
+    <a href="index.html#contact" class="nav__mobile-link nav__mobile-cta">Partner With Us</a>
+  </div>
+
+  <!-- HERO BACKGROUND WRAPPER -->
+  <div class="hero-section-bg">
+    <div class="hero-bg-layer hero-bg-layer--cuna"></div>
+    <div class="hero-bg-layer hero-bg-layer--concierto"></div>
+
+    <!-- WINERY SWITCHER -->
+    <div class="winery-switch">
+      <div class="winery-switch__inner">
+        <button class="winery-btn active" data-winery="cuna">
+          <span class="winery-btn__name">Cuna de Tierra</span>
+          <span class="winery-btn__loc">Dolores Hidalgo, Guanajuato</span>
+        </button>
+        <button class="winery-btn" data-winery="concierto">
+          <span class="winery-btn__name">Concierto Enológico</span>
+          <span class="winery-btn__loc">Valle de Guadalupe, Baja California</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero reveal">
+      <span class="label" id="hero-label">Cuna de Tierra Collection</span>
+      <h1 id="hero-title">A Portfolio Born<br><em style="font-style:italic;font-weight:400;">from the Land</em></h1>
+      <p id="hero-desc">Every bottle carries the story of Guanajuato's high-altitude terroir — where volcanic soils, generous sun, and cool nights converge to produce wines of extraordinary character.</p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat__num" id="stat0n">16</span>
+          <span class="hero-stat__txt" id="stat0t">Wines</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat__num" id="stat1n">2,000m</span>
+          <span class="hero-stat__txt" id="stat1t">Elevation</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat__num" id="stat2n">40+</span>
+          <span class="hero-stat__txt" id="stat2t">Awards</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILTERS -->
+    <div class="filters reveal">
+      <button class="filter-btn active" data-filter="all">All Wines</button>
+      <button class="filter-btn" data-filter="white">White</button>
+      <button class="filter-btn" data-filter="rose">Rosé</button>
+      <button class="filter-btn" data-filter="red">Red</button>
+      <button class="filter-btn" data-filter="fortified">Fortified</button>
+    </div>
+  </div>
+
+  <!-- CAROUSEL -->
+  <div class="wine-carousel" id="carouselWrap">
+    <div class="wine-carousel__viewport" id="carouselViewport">
+      <div class="wine-carousel__track" id="carouselTrack"></div>
+    </div>
+    <div class="wine-carousel__nav">
+      <button class="carousel-arrow" id="carouselPrev" aria-label="Previous wines">
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M7 1L1 6l6 5M1 6h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="carousel-dots" id="carouselDots"></div>
+      <button class="carousel-arrow" id="carouselNext" aria-label="Next wines">
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M9 1l6 5-6 5M15 6H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal-bg" id="modalBg" role="dialog" aria-modal="true">
+    <div class="modal" id="modal"></div>
+  </div>
+
+  <script>
+    /* ─── Winery hero data ─── */
+    const wineryMeta = {
+      cuna: {
+        label: 'Cuna de Tierra Collection',
+        titleHTML: 'A Portfolio Born<br><em style="font-style:italic;font-weight:400;">from the Land</em>',
+        desc: 'Every bottle carries the story of Guanajuato\'s high-altitude terroir — where volcanic soils, generous sun, and cool nights converge to produce wines of extraordinary character.',
+        stats: [{ n:'16', t:'Wines' }, { n:'2,000m', t:'Elevation' }, { n:'40+', t:'Awards' }]
+      },
+      concierto: {
+        label: 'Concierto Enológico Collection',
+        titleHTML: 'A Symphony of<br><em style="font-style:italic;font-weight:400;">Baja California</em>',
+        desc: 'From the sun-kissed soils of Valle de Guadalupe, Concierto Enológico harmonizes artisanal tradition with Baja California\'s singular terroir — expressive, elegant, and beautifully crafted.',
+        stats: [{ n:'6', t:'Wines' }, { n:'12', t:'Awards' }, { n:'18mo', t:'Barrel Aged' }]
+      }
+    };
+
+    /* ─── Wine data ─── */
+    const wines = [
+
+      /* ════════ CUNA DE TIERRA ════════ */
+
+      /* — Whites — */
+      {
+        id:'torre-blanco', winery:'cuna', collection:'Torre de Tierra', img:'torre-de-tierra-blanco.webp',
+        name:'Torre de Tierra', sub:'Semillón',
+        type:'white', typeLabel:'White Wine',
+        grapes:'Semillón', region:'Dolores Hidalgo, Guanajuato',
+        production:'2,500 bottles/year', winemaker:'Juan Manchón',
+        sight:'Elegant pale straw color',
+        nose:'Citrus notes, green apple, pear, epazote, and delicate hints of poblano pepper',
+        palate:'Crisp acidity, very fresh, medium body',
+        serving:'12°C (54°F)',
+        pairing:'Ceviche, tuna tostadas, tiraditos, grilled langoustine, padrón peppers with olive oil and sea salt',
+        vin:'Cold storage after harvest · Low-temperature fermentation to enhance aromas · Decanting in stainless steel tanks · Eco-friendly tangential filtration to preserve flavor',
+        awards:[
+          {m:'🥉', t:'Bronze Medal — Decanter World Wine Awards 2019'},
+          {m:'⭐', t:'91 points — Guía Catadores 2022'}
+        ],
+        top:'91 pts — Guía Catadores 2022'
+      },
+      {
+        id:'cuna-sauvignon', winery:'cuna', collection:'Cuna de Tierra', img:'cuna-de-tierra-blanco.webp',
+        name:'Cuna de Tierra', sub:'Sauvignon Blanc',
+        type:'white', typeLabel:'White Wine',
+        grapes:'Sauvignon Blanc', region:'Dolores Hidalgo, Guanajuato',
+        production:'2,200 bottles/year', winemaker:'Juan Manchón',
+        sight:'Intense, luminous golden color',
+        nose:'Citrus notes, green apple, and kiwi, with white flowers and hints of vanilla and honey',
+        palate:'Fleshy and creamy, with crisp acidity and great freshness',
+        serving:'12°C (54°F)',
+        pairing:'Ceviche, grilled fish, goat cheese, sashimi, baked salmon',
+        vin:'Cold storage after harvest · Low-temperature fermentation · Decanting in stainless steel tanks · Aged 10 weeks in new French oak barrels',
+        awards:[
+          {m:'🥇', t:'Gold Medal — Bacchus 2026'},
+          {m:'🥈', t:'Silver Medal — Concours Mondial de Bruxelles (Mexico Edition) 2017'},
+          {m:'⭐', t:'90 points — Guía Catadores 2020'}
+        ],
+        top:'Gold Medal — Bacchus 2026'
+      },
+      {
+        id:'verdejo', winery:'cuna', collection:'Cuna de Tierra', img:'cuna-de-tierra-verdejo.webp',
+        name:'Verdejo', sub:'Vino Blanco',
+        type:'white', typeLabel:'White Wine',
+        grapes:'Verdejo', region:'Dolores Hidalgo, Guanajuato',
+        production:'1,200 bottles/year', winemaker:'Juan Manchón',
+        sight:'Pale golden color with greenish highlights',
+        nose:'Fresh notes of citrus, green apple and melon, grapefruit, soursop, herbs, and fennel',
+        palate:'Intense attack, with fresh mid-palate tones that invite another sip',
+        serving:'12°C (54°F)',
+        pairing:'Ceviches, tiraditos, aguachiles, tuna sashimi, grilled fish, baked salmon',
+        vin:'Cold storage after harvest · Low-temperature fermentation to enhance aromas · Decanting in stainless steel tanks',
+        awards:[], top:null
+      },
+      {
+        id:'viognier', winery:'cuna', collection:'Cuna de Tierra', img:'cuna-de-tierra-viognier.webp',
+        name:'Viognier', sub:'Vino Blanco',
+        type:'white', typeLabel:'White Wine',
+        grapes:'Viognier', region:'Dolores Hidalgo, Guanajuato',
+        production:'1,200 bottles/year', winemaker:'Juan Manchón',
+        sight:'Pale golden color with greenish highlights',
+        nose:'Very fresh notes of citrus and peach',
+        palate:'Intense attack, with fresh mid-palate tones that invite another sip',
+        serving:'12°C (54°F)',
+        pairing:'Salads, ceviches, tiraditos, aguachiles, tuna sashimi, grilled fish, baked salmon',
+        vin:'Cold storage after harvest · Low-temperature fermentation to enhance aromas · Decanting in stainless steel tanks',
+        awards:[], top:null
+      },
+
+      /* — Rosé — */
+      {
+        id:'torre-rose', winery:'cuna', collection:'Torre de Tierra', img:'torre-de-tierra-rosado.webp',
+        name:'Torre de Tierra', sub:'Rosado',
+        type:'rose', typeLabel:'Rosé Wine',
+        grapes:'Predominantly Cabernet Franc', region:'Dolores Hidalgo, Guanajuato',
+        production:'2,500 bottles/year', winemaker:'Juan Manchón',
+        sight:'Youthful and bright, with pale pink hues',
+        nose:'Fresh red fruit aromas like raspberry and pomegranate with citrus notes',
+        palate:'Broad entry with balanced acidity, freshness and citrus flavors',
+        serving:'12°C (54°F)',
+        pairing:'Ceviche, tuna tostadas, sushi, sashimi, roast beef sandwich, pomodoro pasta',
+        vin:'Cold storage overnight post-harvest · Saignée method from red vinification · Partial carbonic maceration to enhance freshness and primary aromas · Decanting in stainless steel tanks · Eco-friendly tangential filtration',
+        awards:[], top:null
+      },
+
+      /* — Reds — */
+      {
+        id:'torre-rojo', winery:'cuna', collection:'Torre de Tierra', img:'torre-de-tierra-tinto.webp',
+        name:'Torre de Tierra', sub:'Tempranillo Blend',
+        type:'red', typeLabel:'Red Wine',
+        grapes:'Tempranillo, Cabernet Sauvignon, Petite Sirah', region:'Dolores Hidalgo, Guanajuato',
+        production:'11,500 bottles/year', winemaker:'Juan Manchón',
+        sight:'Plum red with medium intensity',
+        nose:'Ripe red and black fruits, with notes of dark chocolate',
+        palate:'Full-bodied, explosive attack, and vibrant acidity',
+        serving:'18°C (64°F)',
+        pairing:'Lean meats, grilled cuts, aged cheeses',
+        vin:'Partial carbonic maceration of Tempranillo to boost freshness and aromatic intensity · Aged at least 3 months in second- and third-use barrels: French, Hungarian, and American oak',
+        awards:[
+          {m:'🥈', t:'Silver Medal — Decanter World Wine Awards 2023'},
+          {m:'🥇', t:'Gold Medal — Les Citadelles du Vin, Bordeaux 2019'}
+        ],
+        top:'Gold Medal — Les Citadelles du Vin, Bordeaux 2019'
+      },
+      {
+        id:'m-cubica', winery:'cuna', collection:'Cuna de Tierra', img:'tinto-m-cubica.webp',
+        name:'M Cúbica', sub:'Blend',
+        type:'red', typeLabel:'Red Wine',
+        grapes:'Malbec, Merlot, Marselan, Tempranillo', region:'Dolores Hidalgo, Guanajuato',
+        production:'20,000 bottles/year', winemaker:'Juan Manchón',
+        sight:'Deep plum red with high intensity',
+        nose:'Warm notes of dark fruits, dominated by raspberry',
+        palate:'Fresh, bold, and vibrant',
+        serving:'14°C (57°F)',
+        pairing:'Modern Mexican cuisine: tuna tostadas, adobo-marinated octopus, cochinita pibil, or chile en nogada with walnut sauce',
+        vin:'Partial carbonic maceration to enhance floral and fruity aromas · Aged six months in a mix of new and second-use barrels: French, Hungarian, and American oak',
+        awards:[
+          {m:'🥈', t:'Silver Medal — Decanter World Wine Awards 2023'},
+          {m:'🥉', t:'Bronze Medal — Decanter World Wine Awards 2022'}
+        ],
+        top:'Silver Medal — Decanter World Wine Awards 2023'
+      },
+
+      {
+        id:'cabernet', winery:'cuna', collection:'Cuna de Tierra', img:'cuna-de-tierra-tinto.webp',
+        name:'Cabernet Sauvignon', sub:'Vino Tinto',
+        type:'red', typeLabel:'Red Wine',
+        grapes:'Cabernet Sauvignon, Merlot, Cabernet Franc, Petite Sirah', region:'Dolores Hidalgo, Guanajuato',
+        production:'6,500 bottles/year', winemaker:'Juan Manchón',
+        sight:'Ruby red with garnet hues and medium color intensity',
+        nose:'Blackberry and plum, with notes of vanilla, coffee, and tobacco, finishing fresh with eucalyptus',
+        palate:'Smooth entry, medium body with freshness, harmonious and rounded tannins',
+        serving:'16°C – 18°C (61–64°F)',
+        pairing:'Mushrooms, lamb, spiced meats, crusted tuna, dark chocolate truffles',
+        vin:'Cold pre-fermentation maceration to extract fine aromas · Aged 12 months in new and second-use barrels: French, Hungarian, and American oak',
+        awards:[{m:'🏆', t:'Grand Gold — Les Citadelles du Vin, Bordeaux 2023'}],
+        top:'Grand Gold — Les Citadelles du Vin, Bordeaux 2023'
+      },
+      {
+        id:'malbec', winery:'cuna', collection:'Cuna de Tierra', img:'cuna-de-tierra-malbec.webp',
+        name:'Malbec', sub:'Vino Tinto',
+        type:'red', typeLabel:'Red Wine',
+        grapes:'Malbec', region:'Dolores Hidalgo, Guanajuato',
+        production:'5,000 bottles/year', winemaker:'Juan Manchón',
+        sight:'Deep garnet with high color intensity',
+        nose:'Red plum, raspberry, earthy notes, dark chocolate, and vanilla',
+        palate:'Smooth entry, fresh and crisp mid-palate, harmonious and rounded tannins',
+        serving:'16°C – 18°C (61–64°F)',
+        pairing:'Lean red meats, dark-meat poultry — duck, lamb, or pork carnitas',
+        vin:'Aged 12 months in new and second-use barrels: French, Hungarian, and American oak',
+        awards:[
+          {m:'🥇', t:'Gold Medal — Bacchus 2024'},
+          {m:'🥈', t:'Silver Medal — Decanter World Wine Awards 2024'},
+          {m:'⭐', t:'94 points — Guía Catadores 2022'}
+        ],
+        top:'Gold Medal — Bacchus 2024'
+      },
+      {
+        id:'syrah', winery:'cuna', collection:'Cuna de Tierra', img:'cuna-de-tierra-syrah.webp',
+        name:'Syrah', sub:'Vino Tinto',
+        type:'red', typeLabel:'Red Wine',
+        grapes:'Syrah', region:'Dolores Hidalgo, Guanajuato',
+        production:'5,350 bottles/year', winemaker:'Juan Manchón',
+        sight:'Ruby red with garnet hues and high color intensity',
+        nose:'Spicy notes with hints of cherry, blackberry, cinnamon, and dark chocolate',
+        palate:'Broad attack with noticeable acidity. Silky, well-structured tannins and a long finish',
+        serving:'16°C – 18°C (61–64°F)',
+        pairing:'Lean meats, spiced dishes, aged cheeses, game meats',
+        vin:'Cold pre-fermentation maceration to extract fine aromas · Aged 12 months in new and second-use barrels: French, Hungarian, and American oak',
+        awards:[
+          {m:'🏆', t:'Grand Gold Medal — Bacchus 2026'},
+          {m:'⭐', t:'95 points — Guía Catadores 2023'},
+          {m:'🥉', t:'Bronze Medal — Decanter World Wine Awards 2023'},
+          {m:'⭐', t:'93 points — Guía Catadores 2022'}
+        ],
+        top:'Grand Gold — Bacchus 2026 · 95 pts Guía Catadores'
+      },
+      {
+        id:'nebbiolo', winery:'cuna', collection:'Cuna de Tierra', img:'cuna-de-tierra-nebiolo.webp',
+        name:'Nebbiolo', sub:'Vino Tinto',
+        type:'red', typeLabel:'Red Wine',
+        grapes:'Nebbiolo, Cabernet Sauvignon', region:'Dolores Hidalgo, Guanajuato',
+        production:'11,000 bottles/year', winemaker:'Juan Manchón',
+        sight:'Deep ruby with violet highlights',
+        nose:'Black tea, black pepper, dark fruits, chocolate, vanilla, and a Darjeeling finish',
+        palate:'Intense attack, balanced acidity, blackcurrant-filled palate, elegant and persistent',
+        serving:'16°C – 18°C (61–64°F)',
+        pairing:'Venison, wild boar, game birds, spiced meats, risotto',
+        vin:'Cold pre-fermentation maceration to extract fine aromas · Aged 12 months in new and second-use barrels: French, Hungarian, and American oak',
+        awards:[
+          {m:'🥇', t:'Gold Medal — Bacchus 2026'},
+          {m:'🏆', t:'Grand Gold Medal — Les Citadelles du Vin, Bordeaux 2023'},
+          {m:'🥇', t:'Gold Medal — Bacchus 2023'},
+          {m:'⭐', t:'95 points — Guía Catadores 2022'}
+        ],
+        top:'Grand Gold — Les Citadelles du Vin, Bordeaux 2023'
+      },
+      {
+        id:'gran-nebbiolo', winery:'cuna', collection:'Cuna de Tierra', img:'gran-nebiolo.webp',
+        name:'Gran Nebbiolo', sub:'Vino Tinto',
+        type:'red', typeLabel:'Red Wine',
+        grapes:'Nebbiolo', region:'Dolores Hidalgo, Guanajuato',
+        production:'1,150 bottles/year', winemaker:'Juan Manchón',
+        sight:'Deep ruby with violet highlights',
+        nose:'Dark fruit notes with floral and spicy hints, plus touches of chocolate, cocoa, and vanilla',
+        palate:'Intense attack, balanced acidity with soft tannins, elegant and persistent',
+        serving:'16°C – 18°C (61–64°F)',
+        pairing:'Venison, wild boar, game birds, spiced meats, risotto',
+        vin:'Cold pre-fermentation maceration to extract fine aromas · Aged 18 months in new and second-use barrels: French, Hungarian, and American oak',
+        awards:[
+          {m:'🏆', t:'Best Nebbiolo in Mexico — Guía Catadores 2025 (97 points)'},
+          {m:'🥈', t:'Silver Medal — Concours Mondial de Bruxelles 2024'}
+        ],
+        top:'Best Nebbiolo in Mexico — 97 pts Guía Catadores 2025'
+      },
+      {
+        id:'pago-de-vega', winery:'cuna', collection:'Cuna de Tierra', img:'pago-de-vega.webp',
+        name:'Pago de Vega', sub:'Bordeaux Blend',
+        type:'red', typeLabel:'Red Wine',
+        grapes:'Cabernet Sauvignon, Cabernet Franc, Merlot', region:'Dolores Hidalgo, Guanajuato',
+        production:'5,200 bottles/year', winemaker:'Juan Manchón',
+        sight:'Medium-layer plum red',
+        nose:'Ripe red fruits, blackcurrant, white pepper, undergrowth, moss, truffle',
+        palate:'Fine and persistent attack, fresh acidity, broad on the palate',
+        serving:'18°C (64°F)',
+        pairing:'Lean meats, grilled cuts, aged cheeses',
+        vin:'Selection of finest vineyards — soils contribute an elegant mineral character · Cold pre-fermentation maceration · Aged 12 months in new French oak barrels',
+        awards:[
+          {m:'⭐', t:'96 points — Guía Catadores 2023'},
+          {m:'⭐', t:'97 points — Guía Catadores 2022'},
+          {m:'🥇', t:'Gold Medal — Concours Mondial de Bruxelles 2022'},
+          {m:'🥇', t:'Gold Medal — Les Citadelles du Vin, Bordeaux 2019'}
+        ],
+        top:'97 pts Guía Catadores · Gold CMB 2022'
+      },
+      {
+        id:'gran-pago', winery:'cuna', collection:'Cuna de Tierra', img:'gran-pago-de-vega.webp',
+        name:'Gran Pago de Vega', sub:'Bordeaux Blend — 50 Months',
+        type:'red', typeLabel:'Red Wine',
+        grapes:'Cabernet Sauvignon, Cabernet Franc, Merlot', region:'Dolores Hidalgo, Guanajuato',
+        production:'1,200 bottles/year', winemaker:'Juan Manchón',
+        sight:'Medium-layer plum red',
+        nose:'Ripe red fruits, blackcurrant, white pepper, undergrowth, truffle',
+        palate:'Fine and persistent attack, silky tannins. Broad and elegant',
+        serving:'18°C (64°F)',
+        pairing:'Lean meats, grilled cuts, aged cheeses',
+        vin:'Selection of finest vineyards — soils contribute wet earth and minerality · Perfected through 50 months of aging',
+        awards:[{m:'⭐', t:'97 points — Best Cabernet Blend by Guía Catadores 2024'}],
+        top:'Best Cabernet Blend — 97 pts Guía Catadores 2024'
+      },
+
+      /* — Fortified — */
+      {
+        id:'lloro-de-tierra', winery:'cuna', collection:'Cuna de Tierra', img:'lloro-de-tierra.webp',
+        name:'Lloro de Tierra', sub:'Mistelle',
+        type:'fortified', typeLabel:'Fortified Wine',
+        grapes:'Fantasy, Garnacha, Muscat', region:'Dolores Hidalgo, Guanajuato',
+        production:'7,500 bottles/year', winemaker:'Juan Manchón',
+        sight:'Mahogany color with amber highlights',
+        nose:'Sweet notes of dried fruits: date, prune, dried fig, orange, honey, and coffee',
+        palate:'Intense flavor and long finish, with notes of oak, toasted nuances, and dried fruits',
+        serving:'8°C (46°F)',
+        pairing:'Fruit tarts, dark chocolate, tiramisu, or cajeta crepes',
+        vin:'Fermentation halted after 20% of sugars have converted, with addition of vinous alcohol · Dynamic aging in American white oak using the Jerez-style solera system, with 4-year-old soleras',
+        awards:[
+          {m:'🏆', t:'Grand Gold Medal — Concours Mondial de Bruxelles (Mexico Edition) 2021'},
+          {m:'🥇', t:'Gold Medal — Ensenada Tierra de Vinos Wine Competition 2019'}
+        ],
+        top:'Grand Gold — Concours Mondial de Bruxelles 2021'
+      },
+
+      /* ════════ CONCIERTO ENOLÓGICO ════════ */
+
+      {
+        id:'allegro', winery:'concierto', collection:'Concierto Enológico', img:'allegro_2022.webp',
+        name:'Allegro', sub:'2022',
+        type:'white', typeLabel:'White Wine',
+        grapes:'Chardonnay, Sauvignon Blanc', region:'Valle de Guadalupe, Baja California',
+        alcohol:'13.4%', aging:'3 months in French oak barrels',
+        sight:'Medium intensity, yellow straw with gold flashes',
+        nose:'Notes of honey, pineapple, dried fruits, peppers, guava, lemon, white flowers, and lemongrass',
+        palate:'Medium acidity with a refreshing taste; persistent, well-balanced finish',
+        serving:'10°C – 12°C (50–54°F)',
+        pairing:'Fresh ceviche, grilled fish, shrimp tacos, tropical fruit salads, soft cheeses',
+        vin:'3 months aging in French oak barrels · Cold low-temperature fermentation to preserve aromatic freshness · Careful selection of Chardonnay and Sauvignon Blanc from Valle de Guadalupe',
+        awards:[
+          {m:'🥇', t:'Gold — XXII International Competition of Bacchus Wines 2024'},
+          {m:'⭐', t:'87 points — Peñín Guide 2021'}
+        ],
+        top:'Gold — Bacchus Wines 2024'
+      },
+      {
+        id:'vivacce', winery:'concierto', collection:'Concierto Enológico', img:'vivacce_2022.webp',
+        name:'Vivacce', sub:'2022',
+        type:'rose', typeLabel:'Rosé Wine',
+        grapes:'100% Grenache', region:'Valle de Guadalupe, Baja California',
+        alcohol:'12.9%', aging:null,
+        sight:'Pale salmon with golden flashes',
+        nose:'Very aromatic — notes of peach, strawberry, rose petals, and a touch of grapefruit skin',
+        palate:'Medium acidity, subtle and elegant, with persistent fruity notes',
+        serving:'10°C – 12°C (50–54°F)',
+        pairing:'Charcuterie boards, grilled salmon, summer salads, caprese, light tapas',
+        vin:'Direct press of 100% Grenache · Cold low-temperature fermentation to preserve aromatic freshness · Gentle handling to achieve the signature pale salmon hue',
+        awards:[
+          {m:'🥇', t:'Gold — México Selection by CMB / Concours Mondial de Bruxelles 2023 Yucatán'},
+          {m:'🥇', t:'Gold — México International Wine Competition 2023'},
+          {m:'⭐', t:'86 points — Peñín Guide 2022'},
+          {m:'🏅', t:'México International Wine Competition 2024'}
+        ],
+        top:'Double Gold — CMB Yucatán & México International Wine Competition 2023'
+      },
+      {
+        id:'obertura', winery:'concierto', collection:'Concierto Enológico', img:'obertura_2022.webp',
+        name:'Obertura', sub:'2022',
+        type:'red', typeLabel:'Red Wine',
+        grapes:'Cabernet Sauvignon, Merlot', region:'Valle de Guadalupe, Baja California',
+        alcohol:'12.9%', aging:null,
+        sight:'Medium intensity ruby red',
+        nose:'Scents of dried red fruits, cooked hibiscus, with a slight lactic note',
+        palate:'Smooth texture, fresh on the palate with young tannins, balanced acidity and alcohol, ending with a fruity finish',
+        serving:'16°C – 18°C (61–64°F)',
+        pairing:'Grilled chicken, mushroom risotto, light pasta dishes, tapas, charcuterie boards',
+        vin:'Harvest from Valle de Guadalupe · Fermentation in temperature-controlled stainless steel tanks · Gentle extraction to preserve fresh red fruit character',
+        awards:[
+          {m:'🥇', t:'Gold — México Selection by CMB / Concours Mondial de Bruxelles 2023 Yucatán'},
+          {m:'🥇', t:'Gold — México International Wine Competition 2023'},
+          {m:'⭐', t:'90 points — Peñín Guide 2022'}
+        ],
+        top:'90 pts — Peñín Guide 2022 · Gold — México International Wine Competition 2023'
+      },
+      {
+        id:'pauta', winery:'concierto', collection:'Concierto Enológico', img:'pauta_2022.webp',
+        name:'Pauta', sub:'2022',
+        type:'red', typeLabel:'Red Wine',
+        grapes:'Cabernet Sauvignon, Merlot, Tempranillo, Barbera, Grenache', region:'Valle de Guadalupe, Baja California',
+        alcohol:'13.9%', aging:'6 months in French oak barrels',
+        sight:'Deep violet with ruby flashes',
+        nose:'Notes of pomegranate, dark fruits, licorice, vanilla, clove, and a slight mineral quality',
+        palate:'Medium body, medium acidity, young tannins, and a persistent finish',
+        serving:'16°C – 18°C (61–64°F)',
+        pairing:'Slow-braised meats, lamb chops, aged manchego, beef tenderloin, charcuterie',
+        vin:'Five-varietal coupage: Cabernet Sauvignon, Merlot, Tempranillo, Barbera & Grenache · 6 months aging in French oak barrels · Careful selection for aromatic complexity and structure',
+        awards:[
+          {m:'🥇', t:'Gold — México International Wine Competition'},
+          {m:'⭐', t:'89 points — Peñín Guide 2021'}
+        ],
+        top:'89 pts — Peñín Guide 2021 · Gold — México International Wine Competition'
+      },
+      {
+        id:'forza', winery:'concierto', collection:'Concierto Enológico', img:'forza_2021.webp',
+        name:'Forza', sub:'2021',
+        type:'red', typeLabel:'Red Wine',
+        grapes:'Cabernet Sauvignon, Merlot, Barbera', region:'Valle de Guadalupe, Baja California',
+        alcohol:'13.9%', aging:'12 months in French oak barrels',
+        sight:'Medium intensity garnet red with a brick-colored rim',
+        nose:'Notes of dark compote fruits, tobacco, ash, slight menthol, and leather',
+        palate:'Polished tannins, medium acidity, long finish, and extremely enjoyable on the palate',
+        serving:'16°C – 18°C (61–64°F)',
+        pairing:'Venison, duck confit, beef short ribs, aged hard cheeses, truffle dishes',
+        vin:'Careful selection of Cabernet Sauvignon, Merlot & Barbera · 12 months aging in French oak barrels · Extended maceration for depth of color and tannin refinement',
+        awards:[
+          {m:'🥈', t:'Silver Medal — Concours Mondial de Bruxelles 2024'}
+        ],
+        top:'Silver — Concours Mondial de Bruxelles 2024'
+      },
+      {
+        id:'concierto-wine', winery:'concierto', collection:'Concierto Enológico', img:'concierto_2020.webp',
+        name:'Concierto', sub:'2020',
+        type:'red', typeLabel:'Red Wine',
+        grapes:'Cabernet Sauvignon, Merlot, Nebbiolo', region:'Valle de Guadalupe, Baja California',
+        alcohol:'13.9%', aging:'18 months in French oak barrels',
+        sight:'Garnet red with brick flashes',
+        nose:'Very expressive aromas of matured dark fruits — fig, date, truffle, and mocha',
+        palate:'Medium bodied, well rounded, and elegant. Polished tannins and a long, distinguished finish',
+        serving:'16°C – 18°C (61–64°F)',
+        pairing:'Wagyu beef, rack of lamb, game birds, fine aged cheeses, risotto nero',
+        vin:'Flagship blend of Cabernet Sauvignon, Merlot & Nebbiolo · 18 months aging in French oak barrels · The winery\'s finest expression — harmonizing Baja California\'s terroir with Italian grape character',
+        awards:[],
+        top:null
+      }
+    ];
+
+    /* ─── Winery asset folders ─── */
+    const wineryFolder = {
+      cuna: 'assets/cuna-de-tierra',
+      concierto: 'assets/concierto-enologico'
+    };
+
+    /* ─── State ─── */
+    let currentWinery = 'cuna';
+    let currentType   = 'all';
+
+    /* ─── Carousel state ─── */
+    const CGAP = 28;
+    let cList = [], cIdx = 0, cTimer = null, cPaused = false;
+
+    function cVisible() { return window.innerWidth < 580 ? 1 : window.innerWidth < 960 ? 2 : 3; }
+    function cCardW()   { const vp = document.getElementById('carouselViewport'); return vp ? (vp.offsetWidth - (cVisible()-1)*CGAP) / cVisible() : 360; }
+    function cMaxIdx()  { return Math.max(0, cList.length - cVisible()); }
+
+    function cGoTo(idx, animate=true) {
+      cIdx = Math.max(0, Math.min(idx, cMaxIdx()));
+      const track = document.getElementById('carouselTrack');
+      if (track) {
+        track.style.transition = animate ? 'transform .55s cubic-bezier(.25,.46,.45,.94)' : 'none';
+        track.style.transform  = `translateX(-${cIdx * (cCardW() + CGAP)}px)`;
+      }
+      cUpdateNav();
+    }
+
+    function cUpdateNav() {
+      const prev   = document.getElementById('carouselPrev');
+      const next   = document.getElementById('carouselNext');
+      const dotsEl = document.getElementById('carouselDots');
+      if (prev) prev.disabled = cIdx === 0;
+      if (next) next.disabled = cIdx >= cMaxIdx();
+      if (!dotsEl) return;
+      const steps = cMaxIdx() + 1;
+      if (steps <= 7) {
+        if (+dotsEl.dataset.count !== steps) {
+          dotsEl.dataset.count = steps;
+          dotsEl.innerHTML = '';
+          for (let i = 0; i < steps; i++) {
+            const d = document.createElement('button');
+            d.className = 'carousel-dot';
+            d.setAttribute('aria-label', `Go to position ${i + 1}`);
+            d.addEventListener('click', () => { cGoTo(i); cResetTimer(); });
+            dotsEl.appendChild(d);
+          }
+        }
+        dotsEl.querySelectorAll('.carousel-dot').forEach((d, i) => d.classList.toggle('active', i === cIdx));
+      } else {
+        dotsEl.innerHTML = `<span class="carousel-counter">${cIdx + 1} / ${steps}</span>`;
+      }
+    }
+
+    function cResetTimer() {
+      clearInterval(cTimer);
+      cTimer = setInterval(() => { if (!cPaused) cGoTo(cIdx >= cMaxIdx() ? 0 : cIdx + 1); }, 3500);
+    }
+
+    function cResize() {
+      const wrap = document.getElementById('carouselWrap');
+      if (wrap) wrap.style.setProperty('--card-w', cCardW() + 'px');
+      cGoTo(Math.min(cIdx, cMaxIdx()), false);
+    }
+
+    /* ─── Render cards ─── */
+    function renderCards(winery, type) {
+      const track = document.getElementById('carouselTrack');
+      if (!track) return;
+      track.innerHTML = '';
+      cList = wines.filter(w => w.winery === winery).filter(w => type === 'all' || w.type === type);
+
+      cList.forEach(w => {
+        const card = document.createElement('article');
+        card.className = 'wine-card';
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('role', 'button');
+        card.setAttribute('aria-label', `View details for ${w.name}`);
+
+        const footLeft = w.production
+          ? `<span class="card-production">${w.production}</span>`
+          : w.alcohol ? `<span class="card-production">${w.alcohol} Alc.</span>` : '';
+
+        card.innerHTML = `
+          ${w.img ? `
+          <div class="card-bottle">
+            <img src="${wineryFolder[w.winery]}/${w.img}" alt="${w.name}" loading="lazy">
+            <div class="card-bottle__label">
+              <span class="card-badge">${w.typeLabel}</span>
+              <div class="card-winery">${w.collection}</div>
+              <h3 class="card-name">${w.name}</h3>
+              ${w.sub ? `<div class="card-sub">${w.sub}</div>` : ''}
+            </div>
+          </div>
+          ` : `
+          <div class="card-head card-head--${w.type}">
+            <span class="card-badge">${w.typeLabel}</span>
+            <div class="card-winery">${w.collection}</div>
+            <h3 class="card-name">${w.name}</h3>
+            ${w.sub ? `<div class="card-sub">${w.sub}</div>` : ''}
+          </div>
+          `}
+          <div class="card-body">
+            <div class="card-grapes">${w.grapes}</div>
+            <div class="card-region">
+              <svg width="10" height="12" viewBox="0 0 10 12" fill="none" style="flex-shrink:0">
+                <path d="M5 0C2.24 0 0 2.24 0 5c0 3.75 5 7 5 7s5-3.25 5-7c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 5 3.5 1.5 1.5 0 0 1 5 6.5z" fill="#797853"/>
+              </svg>
+              ${w.region}
+            </div>
+            ${w.top ? `<hr class="card-divider"><div class="card-award"><span>🏅</span><span>${w.top}</span></div>` : ''}
+          </div>
+          <div class="card-foot">
+            ${footLeft}
+            <span class="card-explore">Explore <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M9 1l4 4-4 4M1 5h12" stroke="#454411" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>`;
+
+        card.addEventListener('click', () => openModal(w.id));
+        card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openModal(w.id); });
+        track.appendChild(card);
+      });
+
+      cIdx = 0;
+      cResize();
+      cUpdateNav();
+      cResetTimer();
+    }
+
+    /* ─── Update hero ─── */
+    function updateHero(key) {
+      const d = wineryMeta[key];
+      document.getElementById('hero-label').textContent = d.label;
+      document.getElementById('hero-title').innerHTML  = d.titleHTML;
+      document.getElementById('hero-desc').textContent = d.desc;
+      document.getElementById('stat0n').textContent = d.stats[0].n;
+      document.getElementById('stat0t').textContent = d.stats[0].t;
+      document.getElementById('stat1n').textContent = d.stats[1].n;
+      document.getElementById('stat1t').textContent = d.stats[1].t;
+      document.getElementById('stat2n').textContent = d.stats[2].n;
+      document.getElementById('stat2t').textContent = d.stats[2].t;
+    }
+
+    /* ─── Update visible filter buttons ─── */
+    function updateFilters(key) {
+      const types = new Set(wines.filter(w => w.winery === key).map(w => w.type));
+      document.querySelectorAll('.filter-btn[data-filter]').forEach(btn => {
+        const f = btn.dataset.filter;
+        if (f === 'all') return;
+        btn.hidden = !types.has(f);
+      });
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === 'all'));
+    }
+
+    /* ─── Switch winery ─── */
+    function switchWinery(key) {
+      currentWinery = key;
+      currentType   = 'all';
+      document.querySelectorAll('.winery-btn').forEach(b => b.classList.toggle('active', b.dataset.winery === key));
+      document.querySelector('.hero-bg-layer--cuna').style.opacity       = key === 'cuna'       ? '1' : '0';
+      document.querySelector('.hero-bg-layer--concierto').style.opacity  = key === 'concierto'  ? '1' : '0';
+      updateHero(key);
+      updateFilters(key);
+      renderCards(key, 'all');
+    }
+
+    /* ─── Modal ─── */
+    function openModal(id) {
+      const w = wines.find(x => x.id === id);
+      if (!w) return;
+
+      const vinSteps = w.vin.split('·').map(s => s.trim()).filter(Boolean);
+      const awardsHTML = w.awards.length
+        ? w.awards.map(a => `<div class="award-row"><span>${a.m}</span><span>${a.t}</span></div>`).join('')
+        : '<p style="color:var(--sage);font-size:.82rem">No international awards recorded yet.</p>';
+
+      const factsHTML = [
+        `<div class="m-fact"><span class="m-fact-lbl">Grapes</span><span class="m-fact-val">${w.grapes}</span></div>`,
+        `<div class="m-fact"><span class="m-fact-lbl">Region</span><span class="m-fact-val">${w.region}</span></div>`,
+        w.alcohol   ? `<div class="m-fact"><span class="m-fact-lbl">Alcohol</span><span class="m-fact-val">${w.alcohol}</span></div>` : '',
+        w.aging     ? `<div class="m-fact"><span class="m-fact-lbl">Aging</span><span class="m-fact-val">${w.aging}</span></div>` : '',
+        w.winemaker ? `<div class="m-fact"><span class="m-fact-lbl">Winemaker</span><span class="m-fact-val">${w.winemaker}</span></div>` : '',
+        w.production? `<div class="m-fact"><span class="m-fact-lbl">Production</span><span class="m-fact-val">${w.production}</span></div>` : '',
+      ].filter(Boolean).join('');
+
+      document.getElementById('modal').innerHTML = `
+        ${w.img ? `
+        <div class="m-hero">
+          <div class="m-img">
+            <img src="${wineryFolder[w.winery]}/${w.img}" alt="${w.name}">
+          </div>
+          <div class="m-info">
+            <button class="m-close" id="mClose" aria-label="Close">✕</button>
+            <div class="m-meta">
+              <span class="m-pill m-pill--${w.type}">${w.typeLabel}</span>
+              <span class="m-winery">${w.collection}</span>
+            </div>
+            <h2 class="m-name">${w.name}</h2>
+            ${w.sub ? `<div class="m-subtitle">${w.sub}</div>` : ''}
+            <div class="m-facts">${factsHTML}</div>
+          </div>
+        </div>
+        ` : `
+        <div class="m-head">
+          <button class="m-close" id="mClose" aria-label="Close">✕</button>
+          <div class="m-meta">
+            <span class="m-pill m-pill--${w.type}">${w.typeLabel}</span>
+            <span class="m-winery">${w.collection}</span>
+          </div>
+          <h2 class="m-name">${w.name}</h2>
+          ${w.sub ? `<div class="m-subtitle">${w.sub}</div>` : ''}
+        </div>
+        <div class="m-facts">${factsHTML}</div>
+        `}
+
+        <div class="m-tasting">
+          <div class="m-section-lbl">Tasting Notes</div>
+          <div class="taste-grid">
+            <div class="taste-item">
+              <div class="taste-disc">👁</div>
+              <div class="taste-title">Sight</div>
+              <div class="taste-text">${w.sight}</div>
+            </div>
+            <div class="taste-item">
+              <div class="taste-disc">🌿</div>
+              <div class="taste-title">Nose</div>
+              <div class="taste-text">${w.nose}</div>
+            </div>
+            <div class="taste-item">
+              <div class="taste-disc">✨</div>
+              <div class="taste-title">Palate</div>
+              <div class="taste-text">${w.palate}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="m-section">
+          <hr>
+          <h4>Vinification &amp; Aging</h4>
+          <ul>${vinSteps.map(s => `<li>${s}</li>`).join('')}</ul>
+        </div>
+
+        <div class="m-section">
+          <hr>
+          <h4>Awards &amp; Recognition</h4>
+          ${awardsHTML}
+        </div>
+
+        <div class="m-section">
+          <hr>
+          <div class="details-grid">
+            <div><h4>Food Pairing</h4><p>${w.pairing}</p></div>
+            <div><h4>Serving Temperature</h4><p>${w.serving}</p></div>
+          </div>
+        </div>
+        <div style="height:1.5rem"></div>`;
+
+      const bg = document.getElementById('modalBg');
+      bg.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      document.getElementById('mClose').addEventListener('click', closeModal);
+    }
+
+    function closeModal() {
+      document.getElementById('modalBg').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('modalBg').addEventListener('click', e => {
+      if (e.target === e.currentTarget) closeModal();
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    /* ─── Winery buttons ─── */
+    document.querySelectorAll('.winery-btn').forEach(btn => {
+      btn.addEventListener('click', () => switchWinery(btn.dataset.winery));
+    });
+
+    /* ─── Type filters ─── */
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentType = btn.dataset.filter;
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderCards(currentWinery, currentType);
+      });
+    });
+
+    /* ─── Carousel events ─── */
+    document.getElementById('carouselPrev').addEventListener('click', () => { cGoTo(cIdx - 1); cResetTimer(); });
+    document.getElementById('carouselNext').addEventListener('click', () => { cGoTo(cIdx + 1); cResetTimer(); });
+    document.getElementById('carouselViewport').addEventListener('mouseenter', () => { cPaused = true; });
+    document.getElementById('carouselViewport').addEventListener('mouseleave', () => { cPaused = false; });
+    let cResizeT;
+    window.addEventListener('resize', () => { clearTimeout(cResizeT); cResizeT = setTimeout(cResize, 100); });
+
+    /* ─── Nav scroll ─── */
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('scrolled', scrollY > 20);
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = scrollable > 0 ? (scrollY / scrollable) * 100 : 0;
+      document.getElementById('navProgress').style.width = pct + '%';
+    });
+
+    /* ─── Mobile nav ─── */
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('mobileNav').classList.toggle('open');
+    });
+    document.querySelectorAll('.nav__mobile-link').forEach(l => {
+      l.addEventListener('click', () => document.getElementById('mobileNav').classList.remove('open'));
+    });
+
+    /* ─── Scroll reveal ─── */
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } });
+    }, { threshold: .12 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    /* ─── Init — honour ?winery hash from index.html links ─── */
+    const hashWinery = window.location.hash.replace('#', '');
+    const startWinery = (hashWinery === 'concierto') ? 'concierto' : 'cuna';
+    if (startWinery !== 'cuna') {
+      document.querySelectorAll('.winery-btn').forEach(b => b.classList.toggle('active', b.dataset.winery === startWinery));
+      currentWinery = startWinery;
+      updateHero(startWinery);
+    }
+    renderCards(startWinery, 'all');
+    updateFilters(startWinery);
+  </script>
+</body>
+</html>

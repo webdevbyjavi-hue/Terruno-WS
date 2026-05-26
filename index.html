@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terruno Wine &amp; Spirits — Mexico's Finest, Imported</title>
+  <meta name="description" content="Terruno Wine & Spirits imports artisanal wines, mezcals, and traditional spirits from Mexico's most storied regions to the US market." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVIGATION
+  ============================================================ -->
+  <nav class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="#home" class="nav__logo">
+        <img src="assets/logo-transparent.png" alt="Terruno Wine &amp; Spirits" class="nav__logo-img" />
+        <span class="nav__logo-wordmark">TERRUNO-WS</span>
+      </a>
+
+      <ul class="nav__links" id="navLinks">
+        <li><a href="#story" class="nav__link">Our Story</a></li>
+        <li><a href="#portfolio" class="nav__link">Portfolio</a></li>
+        <li><a href="#team" class="nav__link">Team</a></li>
+        <li><a href="#markets" class="nav__link">Markets</a></li>
+        <li><a href="#contact" class="nav__cta btn-primary">Partner With Us</a></li>
+      </ul>
+
+      <button class="nav__hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile nav overlay -->
+  <div class="nav__mobile" id="mobileNav">
+    <a href="#story" class="nav__mobile-link">Our Story</a>
+    <a href="#portfolio" class="nav__mobile-link">Portfolio</a>
+    <a href="#team" class="nav__mobile-link">Team</a>
+    <a href="#markets" class="nav__mobile-link">Markets</a>
+    <a href="#contact" class="nav__mobile-link nav__mobile-cta">Partner With Us</a>
+  </div>
+
+
+  <!-- ============================================================
+       HERO — Animated Vineyard Scene
+  ============================================================ -->
+  <section class="hero" id="home">
+
+    <!-- Background image with parallax -->
+    <div class="hero__landscape" aria-hidden="true">
+      <div class="hero__bg" data-parallax="0.35"></div>
+
+      <canvas class="hero__canvas" id="heroCanvas"></canvas>
+
+      <!-- Floating leaves -->
+      <div class="hero__leaves" id="heroLeaves" aria-hidden="true"></div>
+
+      <!-- Overlay gradient for text legibility -->
+      <div class="hero__overlay"></div>
+    </div>
+
+    <!-- Hero content -->
+    <div class="hero__content">
+      <p class="hero__eyebrow fade-up" style="--delay: 0.1s">Mexico's Hidden Terroir</p>
+      <h1 class="hero__headline fade-up" style="--delay: 0.3s">
+        Where Ancient<br><em>Land</em> Meets<br>Fine Craft
+      </h1>
+      <p class="hero__sub fade-up" style="--delay: 0.55s">
+        Importing artisanal wines, mezcals, and spirits from Mexico's most storied and undiscovered regions — curated for the US palate.
+      </p>
+      <div class="hero__actions fade-up" style="--delay: 0.75s">
+        <a href="#portfolio" class="btn-primary">Explore Our Portfolio</a>
+        <a href="#story" class="btn-ghost">Our Story</a>
+      </div>
+    </div>
+
+    <!-- Scroll cue -->
+    <div class="hero__scroll" aria-hidden="true">
+      <div class="hero__scroll-label">Scroll</div>
+      <div class="hero__scroll-line"></div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       ABOUT / OUR STORY
+  ============================================================ -->
+  <section class="section story" id="story">
+    <div class="container story__inner">
+
+      <div class="story__text">
+        <p class="section-label reveal">Who We Are</p>
+        <h2 class="section-title reveal">A Name Rooted<br>in the <em>Land</em></h2>
+        <p class="body-text reveal">
+          Terruno was born from a simple truth: Mexico's vineyards and distilleries produce extraordinary things the world has yet to discover. Founded in 2023 by Daniel Miranda, we exist to change that — one carefully chosen bottle at a time.
+        </p>
+        <p class="body-text reveal">
+          The name speaks our purpose. <em>Terruno</em> derives from <em>terra</em> — land, soil, the living ground beneath every vine. It is the essence of terroir: the climate, the altitude, the centuries of tradition that make each provenance irreplaceable and every story worth sharing.
+        </p>
+        <div class="story__values reveal">
+          <div class="story__value">
+            <span class="story__value-dot"></span>
+            Refined, not pretentious
+          </div>
+          <div class="story__value">
+            <span class="story__value-dot"></span>
+            Storytelling-first
+          </div>
+          <div class="story__value">
+            <span class="story__value-dot"></span>
+            Discovery-oriented
+          </div>
+        </div>
+        <a href="#contact" class="btn-primary reveal">Start a Conversation</a>
+      </div>
+
+      <div class="story__visual reveal">
+        <div class="story__frame">
+          <img class="story__photo" src="assets/daniel_miranda.webp" alt="Daniel Miranda, founder of Terruno Wine & Spirits, in a vineyard holding a glass of wine"/>
+        </div>
+        <div class="story__badge">
+          <span class="story__badge-est">Est.</span>
+          <span class="story__badge-year">2023</span>
+          <span class="story__badge-loc">New York</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       MISSION
+  ============================================================ -->
+  <section class="section mission" id="mission">
+    <div class="mission__bg-word" aria-hidden="true">TERROIR</div>
+    <div class="container">
+      <div class="mission__header">
+        <p class="section-label reveal">Our Mission</p>
+        <h2 class="section-title reveal">Championing Mexico's<br><em>Hidden Gems</em></h2>
+      </div>
+
+      <div class="mission__pillars">
+
+        <div class="pillar reveal" style="--i:0">
+          <div class="pillar__icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none">
+              <path d="M24 6C24 6 10 14 10 26c0 7.7 6.3 14 14 14s14-6.3 14-14c0-12-14-20-14-20z" fill="currentColor" opacity="0.8"/>
+              <path d="M24 24 C24 24 30 18 36 22" stroke="white" stroke-width="1.5" fill="none" opacity="0.6"/>
+            </svg>
+          </div>
+          <h3 class="pillar__title">Heritage First</h3>
+          <p class="pillar__text">Every bottle carries the story of its land — ancient vines, generational craft, and the soulful character of Mexico's diverse terroir.</p>
+        </div>
+
+        <div class="pillar reveal" style="--i:1">
+          <div class="pillar__icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none">
+              <circle cx="24" cy="20" r="10" fill="currentColor" opacity="0.8"/>
+              <path d="M12 38 C12 30 36 30 36 38" fill="currentColor" opacity="0.5"/>
+              <circle cx="24" cy="20" r="5" fill="white" opacity="0.3"/>
+            </svg>
+          </div>
+          <h3 class="pillar__title">Artisanal Curation</h3>
+          <p class="pillar__text">We seek out producers who honor tradition while achieving excellence — boutique operations with stories worth sharing at any fine table.</p>
+        </div>
+
+        <div class="pillar reveal" style="--i:2">
+          <div class="pillar__icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none">
+              <circle cx="24" cy="24" r="16" stroke="currentColor" stroke-width="1.5" opacity="0.5"/>
+              <circle cx="24" cy="24" r="8" fill="currentColor" opacity="0.8"/>
+              <path d="M24 8 L24 40 M8 24 L40 24" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+            </svg>
+          </div>
+          <h3 class="pillar__title">Discovery-Driven</h3>
+          <p class="pillar__text">From Baja California's coastal vineyards to Oaxaca's agave valleys, we surface exceptional producers who deserve global recognition.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       REGIONS — Mexico Map
+  ============================================================ -->
+  <section class="section regions" id="regions">
+    <div class="container">
+
+      <div class="regions__header">
+        <p class="section-label reveal">Where It All Begins</p>
+        <h2 class="section-title reveal">Mexico's Wine &amp;<br><em>Spirit Regions</em></h2>
+        <p class="body-text regions__intro reveal">From Baja California's fog-kissed valleys to Oaxaca's ancient agave highlands — each state carries its own terroir, its own tradition, its own story.</p>
+      </div>
+
+      <div class="regions__body">
+
+        <div class="regions__map-wrap reveal" id="mexicoMap" role="img" aria-label="Interactive map of Mexico's wine and spirit regions">
+          <div class="regions__loading" id="mapLoading">
+            <div class="regions__spinner"></div>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="regions__legend reveal">
+        <div class="legend-item">
+          <span class="legend-swatch legend-swatch--wine"></span>
+          <span class="legend-label">Our Wine Regions</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-swatch legend-swatch--secondary"></span>
+          <span class="legend-label">Other Wine Regions</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-swatch legend-swatch--base"></span>
+          <span class="legend-label">Other States</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       PORTFOLIO
+  ============================================================ -->
+  <section class="section portfolio" id="portfolio" style="padding:0">
+
+    <!-- Winery switcher + background image -->
+    <div class="pf-intro-bg">
+      <div class="hero-bg-layer hero-bg-layer--cuna"></div>
+      <div class="hero-bg-layer hero-bg-layer--concierto"></div>
+
+      <p class="section-label" style="padding-top:4rem">Our Selection</p>
+      <h2 class="section-title" style="margin-bottom:1.5rem">The Portfolio</h2>
+
+      <div class="winery-switch">
+        <div class="winery-switch__inner">
+          <button class="winery-btn active" data-winery="cuna">
+            <span class="winery-btn__name">Cuna de Tierra</span>
+            <span class="winery-btn__loc">Dolores Hidalgo, Guanajuato</span>
+          </button>
+          <button class="winery-btn" data-winery="concierto">
+            <span class="winery-btn__name">Concierto Enológico</span>
+            <span class="winery-btn__loc">Valle de Guadalupe, Baja California</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Filters -->
+    <div class="pf-filters">
+      <button class="filter-btn active" data-filter="all">All Wines</button>
+      <button class="filter-btn" data-filter="white">White</button>
+      <button class="filter-btn" data-filter="rose">Rosé</button>
+      <button class="filter-btn" data-filter="red">Red</button>
+      <button class="filter-btn" data-filter="fortified">Fortified</button>
+    </div>
+
+    <!-- Wine carousel -->
+    <div class="wine-carousel" id="pfCarouselWrap">
+      <div class="wine-carousel__viewport" id="pfCarouselViewport">
+        <div class="wine-carousel__track" id="pfCarouselTrack"></div>
+      </div>
+      <div class="wine-carousel__nav">
+        <button class="carousel-arrow" id="pfCarouselPrev" aria-label="Previous wines">
+          <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M7 1L1 6l6 5M1 6h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="carousel-dots" id="pfCarouselDots"></div>
+        <button class="carousel-arrow" id="pfCarouselNext" aria-label="Next wines">
+          <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M9 1l6 5-6 5M15 6H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================
+       THE EXPERIENCE — Quote / Channels
+  ============================================================ -->
+  <section class="section experience" id="experience">
+    <div class="experience__bg" aria-hidden="true">
+      <svg class="experience__ornament" viewBox="0 0 600 200" fill="none" preserveAspectRatio="xMidYMid slice">
+        <path d="M0 100 Q150 20 300 100 Q450 180 600 100" stroke="#454411" stroke-width="0.5" opacity="0.15" fill="none"/>
+        <path d="M0 120 Q150 40 300 120 Q450 200 600 120" stroke="#454411" stroke-width="0.5" opacity="0.1" fill="none"/>
+        <path d="M0 80 Q150 0 300 80 Q450 160 600 80" stroke="#454411" stroke-width="0.5" opacity="0.1" fill="none"/>
+      </svg>
+    </div>
+
+    <div class="container experience__inner">
+
+      <div class="experience__quote reveal">
+        <div class="quote-mark" aria-hidden="true">"</div>
+        <blockquote>
+          <p>Every bottle tells a story of soil, sun, and generations of craftsmanship — we bring that story to your table.</p>
+          <cite>— Daniel Miranda, Founder &amp; CEO</cite>
+        </blockquote>
+      </div>
+
+      <div class="experience__divider" aria-hidden="true"></div>
+
+      <div class="experience__channels">
+        <div class="channel-card reveal" style="--i:0">
+          <div class="channel-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none">
+              <path d="M8 30 L8 18 L20 10 L32 18 L32 30Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+              <rect x="15" y="22" width="10" height="8" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M4 18 L20 8 L36 18" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            </svg>
+          </div>
+          <h3 class="channel-card__title">Fine Dining</h3>
+          <p class="channel-card__text">Partner with restaurants that understand provenance — sommelier-friendly selections with compelling stories behind every label on your list.</p>
+        </div>
+        <div class="channel-card reveal" style="--i:1">
+          <div class="channel-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 40 40" fill="none">
+              <rect x="6" y="12" width="28" height="22" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+              <path d="M6 18 L34 18" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M15 8 L15 15 M25 8 L25 15" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="20" cy="26" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            </svg>
+          </div>
+          <h3 class="channel-card__title">Premium Retail</h3>
+          <p class="channel-card__text">For liquor stores that curate with intention — exclusive labels that give your most discerning customers something genuinely worth discovering.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       TEAM
+  ============================================================ -->
+  <section class="section team" id="team">
+    <div class="container">
+      <div class="team__header">
+        <p class="section-label reveal">The People Behind the Bottles</p>
+        <h2 class="section-title reveal">Our Team</h2>
+      </div>
+
+      <div class="team__grid">
+
+        <div class="team-card reveal" style="--i:0">
+          <div class="team-card__photo" aria-label="Daniel Miranda, Founder & CEO">
+            <img src="assets/daniel_miranda_bw.webp" alt="Daniel Miranda, Founder & CEO" class="team-card__photo-img">
+          </div>
+          <div class="team-card__info">
+            <h3 class="team-card__name">Daniel Miranda</h3>
+            <span class="team-card__title">Founder &amp; CEO</span>
+            <p class="team-card__bio">WSET Level 2 certified with a Sales &amp; Marketing background and deep cultural ties to Mexico. On a mission to introduce the US to Mexico's exceptional but underappreciated winemaking tradition — one carefully chosen bottle at a time.</p>
+            <div class="team-card__tag">WSET Level 2</div>
+          </div>
+        </div>
+
+        <div class="team-card reveal" style="--i:1">
+          <div class="team-card__photo" aria-label="Carlos Miranda, Chairman">
+            <img src="assets/carlos_miranda.webp" alt="Carlos Miranda, Chairman" class="team-card__photo-img">
+          </div>
+          <div class="team-card__info">
+            <h3 class="team-card__name">Carlos Miranda</h3>
+            <span class="team-card__title">Chairman</span>
+            <p class="team-card__bio">20+ years of CEO experience across industries. A wine and tequila aficionado who brings executive leadership and strategic vision to Terruno's growth from New York and Texas to becoming a nationally recognized importer of distinction.</p>
+            <div class="team-card__tag">20+ Years CEO</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  
+  <!-- ============================================================
+       CONTACT
+  ============================================================ -->
+  <section class="section contact" id="contact">
+    <div class="container contact__inner">
+
+      <div class="contact__header">
+        <p class="section-label reveal">Partner With Us</p>
+        <h2 class="section-title reveal">Bring Terruno<br>to Your <em>Table</em></h2>
+        <p class="contact__intro reveal">Whether you're a restaurant sommelier building a distinguished wine program or a retailer seeking labels that set you apart — we'd love to connect.</p>
+      </div>
+
+      <form class="contact-form reveal" id="contactForm" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstName" class="form-label">First Name</label>
+            <input type="text" id="firstName" name="firstName" class="form-input" required autocomplete="given-name" />
+          </div>
+          <div class="form-group">
+            <label for="lastName" class="form-label">Last Name</label>
+            <input type="text" id="lastName" name="lastName" class="form-input" required autocomplete="family-name" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email" class="form-label">Email Address</label>
+            <input type="email" id="email" name="email" class="form-input" required autocomplete="email" />
+          </div>
+          <div class="form-group">
+            <label for="phone" class="form-label">Phone Number</label>
+            <input type="tel" id="phone" name="phone" class="form-input" autocomplete="tel" />
+          </div>
+        </div>
+        <div class="form-row form-row--full">
+          <div class="form-group">
+            <label for="company" class="form-label">Company Name</label>
+            <input type="text" id="company" name="company" class="form-input" required autocomplete="organization" />
+          </div>
+        </div>
+        <div class="form-row form-row--full">
+          <div class="form-group">
+            <label for="message" class="form-label">Tell Us About Your Interest</label>
+            <textarea id="message" name="message" class="form-input form-textarea" rows="5"></textarea>
+          </div>
+        </div>
+        <div class="form-submit">
+          <button type="submit" class="btn-primary btn-submit" id="submitBtn">
+            <span class="btn-submit__text">Send Inquiry</span>
+            <span class="btn-submit__arrow" aria-hidden="true">→</span>
+          </button>
+        </div>
+        <div class="form-success" id="formSuccess" aria-live="polite">
+          <div class="form-success__icon" aria-hidden="true">✓</div>
+          <p>Thank you. We'll be in touch shortly.</p>
+        </div>
+      </form>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="footer">
+    <div class="footer__divider" aria-hidden="true"></div>
+    <div class="container footer__inner">
+
+      <div class="footer__brand">
+        <div class="footer__logo">
+          <img src="assets/logo-transparent.png" alt="Terruno Wine &amp; Spirits" class="footer__logo-img" />
+        </div>
+        <p class="footer__mission">Importing Mexico's finest — one discovery at a time.</p>
+      </div>
+
+      <div class="footer__links">
+        <p class="footer__links-heading">Explore</p>
+        <a href="#story" class="footer__link">Our Story</a>
+        <a href="#mission" class="footer__link">Mission</a>
+        <a href="#portfolio" class="footer__link">Portfolio</a>
+        <a href="#team" class="footer__link">Our Team</a>
+        <a href="#markets" class="footer__link">Markets</a>
+      </div>
+
+      <div class="footer__contact-info">
+        <p class="footer__links-heading">Connect</p>
+        <span class="footer__detail">Hauppauge, New York</span>
+        <span class="footer__detail">New York · Texas</span>
+        <a href="#contact" class="btn-ghost footer__cta">Partner With Us</a>
+      </div>
+
+    </div>
+    <div class="footer__bottom">
+      <div class="container footer__bottom-inner">
+        <p>&copy; 2026 Terruno Wine &amp; Spirits. All rights reserved.</p>
+        <p>Designed by <a href="https://www.webikastudio.com" class="footer__ws-link" target="_blank" rel="noopener noreferrer">WebikaStudio</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Portfolio modal -->
+  <div class="modal-bg" id="pfModalBg" role="dialog" aria-modal="true">
+    <div class="modal" id="pfModal"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
