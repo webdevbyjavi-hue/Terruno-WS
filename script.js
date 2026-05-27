@@ -359,7 +359,7 @@
 
   const CARD_DATA = {
     concierto: { abbr: 'BC',  name: 'Concierto Enológico', sub: 'Valle de Guadalupe \u00b7 Baja California', stats: ['6 Wines', '12 Awards', '18mo Barrel Aged'] },
-    cuna:      { abbr: 'GTO', name: 'Cuna de Tierra',      sub: 'Dolores Hidalgo \u00b7 Guanajuato',         stats: ['16 Wines', '40+ Awards', '2,000m Altitude'] },
+    cuna:      { abbr: 'GTO', name: 'Cuna de Tierra',      sub: 'Dolores Hidalgo \u00b7 Guanajuato',         stats: ['6 Wines', '40+ Awards', '2,000m Altitude'] },
   };
 
   const FILL_ACTIVE      = 'rgba(212, 185, 122, 1)';
@@ -427,7 +427,8 @@
       const cr  = card.getBoundingClientRect();
       const sx  = ox + cvx * scX;
       const sy  = oy + cvy * scY;
-      const ex  = cr.left - bodyRect.left;
+      const cardMidX = cr.left - bodyRect.left + cr.width / 2;
+      const ex  = cardMidX < sx ? cr.right - bodyRect.left : cr.left - bodyRect.left;
       const ey  = cr.top  - bodyRect.top + cr.height / 2;
 
       const dx   = ex - sx;
@@ -532,9 +533,7 @@
         });
 
       if (body) {
-        const cardsWrap = document.createElement('div');
-        cardsWrap.className = 'rm-cards';
-        ['concierto', 'cuna'].forEach(function(key) {
+        function makeCard(key) {
           const d    = CARD_DATA[key];
           const card = document.createElement('div');
           card.className = 'rm-card' + (key === activeWinery ? ' rm-card--active' : '');
@@ -552,9 +551,18 @@
             }
           });
           cardEls[key] = card;
-          cardsWrap.appendChild(card);
-        });
-        body.appendChild(cardsWrap);
+          return card;
+        }
+
+        const leftCardsWrap = document.createElement('div');
+        leftCardsWrap.className = 'rm-cards rm-cards--left';
+        leftCardsWrap.appendChild(makeCard('concierto'));
+        body.insertBefore(leftCardsWrap, wrap);
+
+        const rightCardsWrap = document.createElement('div');
+        rightCardsWrap.className = 'rm-cards rm-cards--right';
+        rightCardsWrap.appendChild(makeCard('cuna'));
+        body.appendChild(rightCardsWrap);
 
         const ns2 = 'http://www.w3.org/2000/svg';
         arrowSvgEl = document.createElementNS(ns2, 'svg');
@@ -609,21 +617,11 @@
   const wines = [
     /* ════ CUNA DE TIERRA ════ */
     { id:'torre-blanco', winery:'cuna', collection:'Torre de Tierra', img:'torre-de-tierra-blanco.webp', name:'Torre de Tierra', sub:'Semillón', type:'white', typeLabel:'White Wine', grapes:'Semillón', region:'Dolores Hidalgo, Guanajuato', production:'2,500 bottles/year', winemaker:'Juan Manchón', sight:'Elegant pale straw color', nose:'Citrus notes, green apple, pear, epazote, and delicate hints of poblano pepper', palate:'Crisp acidity, very fresh, medium body', serving:'12°C (54°F)', pairing:'Ceviche, tuna tostadas, tiraditos, grilled langoustine, padrón peppers with olive oil and sea salt', vin:'Cold storage after harvest · Low-temperature fermentation to enhance aromas · Decanting in stainless steel tanks · Eco-friendly tangential filtration to preserve flavor', awards:[{m:'🥉',t:'Bronze Medal — Decanter World Wine Awards 2019'},{m:'⭐',t:'91 points — Guía Catadores 2022'}], top:'91 pts — Guía Catadores 2022' },
-    { id:'cuna-sauvignon', winery:'cuna', collection:'Cuna de Tierra', img:'cuna-de-tierra-blanco.webp', name:'Cuna de Tierra', sub:'Sauvignon Blanc', type:'white', typeLabel:'White Wine', grapes:'Sauvignon Blanc', region:'Dolores Hidalgo, Guanajuato', production:'2,200 bottles/year', winemaker:'Juan Manchón', sight:'Intense, luminous golden color', nose:'Citrus notes, green apple, and kiwi, with white flowers and hints of vanilla and honey', palate:'Fleshy and creamy, with crisp acidity and great freshness', serving:'12°C (54°F)', pairing:'Ceviche, grilled fish, goat cheese, sashimi, baked salmon', vin:'Cold storage after harvest · Low-temperature fermentation · Decanting in stainless steel tanks · Aged 10 weeks in new French oak barrels', awards:[{m:'🥇',t:'Gold Medal — Bacchus 2026'},{m:'🥈',t:'Silver Medal — Concours Mondial de Bruxelles (Mexico Edition) 2017'},{m:'⭐',t:'90 points — Guía Catadores 2020'}], top:'Gold Medal — Bacchus 2026' },
-    { id:'verdejo', winery:'cuna', collection:'Cuna de Tierra', img:'cuna-de-tierra-verdejo.webp', name:'Verdejo', sub:'Vino Blanco', type:'white', typeLabel:'White Wine', grapes:'Verdejo', region:'Dolores Hidalgo, Guanajuato', production:'1,200 bottles/year', winemaker:'Juan Manchón', sight:'Pale golden color with greenish highlights', nose:'Fresh notes of citrus, green apple and melon, grapefruit, soursop, herbs, and fennel', palate:'Intense attack, with fresh mid-palate tones that invite another sip', serving:'12°C (54°F)', pairing:'Ceviches, tiraditos, aguachiles, tuna sashimi, grilled fish, baked salmon', vin:'Cold storage after harvest · Low-temperature fermentation to enhance aromas · Decanting in stainless steel tanks', awards:[], top:null },
     { id:'viognier', winery:'cuna', collection:'Cuna de Tierra', img:'cuna-de-tierra-viognier.webp', name:'Viognier', sub:'Vino Blanco', type:'white', typeLabel:'White Wine', grapes:'Viognier', region:'Dolores Hidalgo, Guanajuato', production:'1,200 bottles/year', winemaker:'Juan Manchón', sight:'Pale golden color with greenish highlights', nose:'Very fresh notes of citrus and peach', palate:'Intense attack, with fresh mid-palate tones that invite another sip', serving:'12°C (54°F)', pairing:'Salads, ceviches, tiraditos, aguachiles, tuna sashimi, grilled fish, baked salmon', vin:'Cold storage after harvest · Low-temperature fermentation to enhance aromas · Decanting in stainless steel tanks', awards:[], top:null },
-    { id:'torre-rose', winery:'cuna', collection:'Torre de Tierra', img:'torre-de-tierra-rosado.webp', name:'Torre de Tierra', sub:'Rosado', type:'rose', typeLabel:'Rosé Wine', grapes:'Predominantly Cabernet Franc', region:'Dolores Hidalgo, Guanajuato', production:'2,500 bottles/year', winemaker:'Juan Manchón', sight:'Youthful and bright, with pale pink hues', nose:'Fresh red fruit aromas like raspberry and pomegranate with citrus notes', palate:'Broad entry with balanced acidity, freshness and citrus flavors', serving:'12°C (54°F)', pairing:'Ceviche, tuna tostadas, sushi, sashimi, roast beef sandwich, pomodoro pasta', vin:'Cold storage overnight post-harvest · Saignée method from red vinification · Partial carbonic maceration to enhance freshness and primary aromas · Decanting in stainless steel tanks · Eco-friendly tangential filtration', awards:[], top:null },
     { id:'torre-rojo', winery:'cuna', collection:'Torre de Tierra', img:'torre-de-tierra-tinto.webp', name:'Torre de Tierra', sub:'Tempranillo Blend', type:'red', typeLabel:'Red Wine', grapes:'Tempranillo, Cabernet Sauvignon, Petite Sirah', region:'Dolores Hidalgo, Guanajuato', production:'11,500 bottles/year', winemaker:'Juan Manchón', sight:'Plum red with medium intensity', nose:'Ripe red and black fruits, with notes of dark chocolate', palate:'Full-bodied, explosive attack, and vibrant acidity', serving:'18°C (64°F)', pairing:'Lean meats, grilled cuts, aged cheeses', vin:'Partial carbonic maceration of Tempranillo to boost freshness and aromatic intensity · Aged at least 3 months in second- and third-use barrels: French, Hungarian, and American oak', awards:[{m:'🥈',t:'Silver Medal — Decanter World Wine Awards 2023'},{m:'🥇',t:'Gold Medal — Les Citadelles du Vin, Bordeaux 2019'}], top:'Gold Medal — Les Citadelles du Vin, Bordeaux 2019' },
-    { id:'m-cubica', winery:'cuna', collection:'Cuna de Tierra', img:'tinto-m-cubica.webp', name:'M Cúbica', sub:'Blend', type:'red', typeLabel:'Red Wine', grapes:'Malbec, Merlot, Marselan, Tempranillo', region:'Dolores Hidalgo, Guanajuato', production:'20,000 bottles/year', winemaker:'Juan Manchón', sight:'Deep plum red with high intensity', nose:'Warm notes of dark fruits, dominated by raspberry', palate:'Fresh, bold, and vibrant', serving:'14°C (57°F)', pairing:'Modern Mexican cuisine: tuna tostadas, adobo-marinated octopus, cochinita pibil, or chile en nogada with walnut sauce', vin:'Partial carbonic maceration to enhance floral and fruity aromas · Aged six months in a mix of new and second-use barrels: French, Hungarian, and American oak', awards:[{m:'🥈',t:'Silver Medal — Decanter World Wine Awards 2023'},{m:'🥉',t:'Bronze Medal — Decanter World Wine Awards 2022'}], top:'Silver Medal — Decanter World Wine Awards 2023' },
-
-    { id:'cabernet', winery:'cuna', collection:'Cuna de Tierra', img:'cuna-de-tierra-tinto.webp', name:'Cabernet Sauvignon', sub:'Vino Tinto', type:'red', typeLabel:'Red Wine', grapes:'Cabernet Sauvignon, Merlot, Cabernet Franc, Petite Sirah', region:'Dolores Hidalgo, Guanajuato', production:'6,500 bottles/year', winemaker:'Juan Manchón', sight:'Ruby red with garnet hues and medium color intensity', nose:'Blackberry and plum, with notes of vanilla, coffee, and tobacco, finishing fresh with eucalyptus', palate:'Smooth entry, medium body with freshness, harmonious and rounded tannins', serving:'16°C – 18°C (61–64°F)', pairing:'Mushrooms, lamb, spiced meats, crusted tuna, dark chocolate truffles', vin:'Cold pre-fermentation maceration to extract fine aromas · Aged 12 months in new and second-use barrels: French, Hungarian, and American oak', awards:[{m:'🏆',t:'Grand Gold — Les Citadelles du Vin, Bordeaux 2023'}], top:'Grand Gold — Les Citadelles du Vin, Bordeaux 2023' },
-    { id:'malbec', winery:'cuna', collection:'Cuna de Tierra', img:'cuna-de-tierra-malbec.webp', name:'Malbec', sub:'Vino Tinto', type:'red', typeLabel:'Red Wine', grapes:'Malbec', region:'Dolores Hidalgo, Guanajuato', production:'5,000 bottles/year', winemaker:'Juan Manchón', sight:'Deep garnet with high color intensity', nose:'Red plum, raspberry, earthy notes, dark chocolate, and vanilla', palate:'Smooth entry, fresh and crisp mid-palate, harmonious and rounded tannins', serving:'16°C – 18°C (61–64°F)', pairing:'Lean red meats, dark-meat poultry — duck, lamb, or pork carnitas', vin:'Aged 12 months in new and second-use barrels: French, Hungarian, and American oak', awards:[{m:'🥇',t:'Gold Medal — Bacchus 2024'},{m:'🥈',t:'Silver Medal — Decanter World Wine Awards 2024'},{m:'⭐',t:'94 points — Guía Catadores 2022'}], top:'Gold Medal — Bacchus 2024' },
     { id:'syrah', winery:'cuna', collection:'Cuna de Tierra', img:'cuna-de-tierra-syrah.webp', name:'Syrah', sub:'Vino Tinto', type:'red', typeLabel:'Red Wine', grapes:'Syrah', region:'Dolores Hidalgo, Guanajuato', production:'5,350 bottles/year', winemaker:'Juan Manchón', sight:'Ruby red with garnet hues and high color intensity', nose:'Spicy notes with hints of cherry, blackberry, cinnamon, and dark chocolate', palate:'Broad attack with noticeable acidity. Silky, well-structured tannins and a long finish', serving:'16°C – 18°C (61–64°F)', pairing:'Lean meats, spiced dishes, aged cheeses, game meats', vin:'Cold pre-fermentation maceration to extract fine aromas · Aged 12 months in new and second-use barrels: French, Hungarian, and American oak', awards:[{m:'🏆',t:'Grand Gold Medal — Bacchus 2026'},{m:'⭐',t:'95 points — Guía Catadores 2023'},{m:'🥉',t:'Bronze Medal — Decanter World Wine Awards 2023'},{m:'⭐',t:'93 points — Guía Catadores 2022'}], top:'Grand Gold — Bacchus 2026 · 95 pts Guía Catadores' },
     { id:'nebbiolo', winery:'cuna', collection:'Cuna de Tierra', img:'cuna-de-tierra-nebiolo.webp', name:'Nebbiolo', sub:'Vino Tinto', type:'red', typeLabel:'Red Wine', grapes:'Nebbiolo, Cabernet Sauvignon', region:'Dolores Hidalgo, Guanajuato', production:'11,000 bottles/year', winemaker:'Juan Manchón', sight:'Deep ruby with violet highlights', nose:'Black tea, black pepper, dark fruits, chocolate, vanilla, and a Darjeeling finish', palate:'Intense attack, balanced acidity, blackcurrant-filled palate, elegant and persistent', serving:'16°C – 18°C (61–64°F)', pairing:'Venison, wild boar, game birds, spiced meats, risotto', vin:'Cold pre-fermentation maceration to extract fine aromas · Aged 12 months in new and second-use barrels: French, Hungarian, and American oak', awards:[{m:'🥇',t:'Gold Medal — Bacchus 2026'},{m:'🏆',t:'Grand Gold Medal — Les Citadelles du Vin, Bordeaux 2023'},{m:'🥇',t:'Gold Medal — Bacchus 2023'},{m:'⭐',t:'95 points — Guía Catadores 2022'}], top:'Grand Gold — Les Citadelles du Vin, Bordeaux 2023' },
-    { id:'gran-nebbiolo', winery:'cuna', collection:'Cuna de Tierra', img:'gran-nebiolo.webp', name:'Gran Nebbiolo', sub:'Vino Tinto', type:'red', typeLabel:'Red Wine', grapes:'Nebbiolo', region:'Dolores Hidalgo, Guanajuato', production:'1,150 bottles/year', winemaker:'Juan Manchón', sight:'Deep ruby with violet highlights', nose:'Dark fruit notes with floral and spicy hints, plus touches of chocolate, cocoa, and vanilla', palate:'Intense attack, balanced acidity with soft tannins, elegant and persistent', serving:'16°C – 18°C (61–64°F)', pairing:'Venison, wild boar, game birds, spiced meats, risotto', vin:'Cold pre-fermentation maceration to extract fine aromas · Aged 18 months in new and second-use barrels: French, Hungarian, and American oak', awards:[{m:'🏆',t:'Best Nebbiolo in Mexico — Guía Catadores 2025 (97 points)'},{m:'🥈',t:'Silver Medal — Concours Mondial de Bruxelles 2024'}], top:'Best Nebbiolo in Mexico — 97 pts Guía Catadores 2025' },
     { id:'pago-de-vega', winery:'cuna', collection:'Cuna de Tierra', img:'pago-de-vega.webp', name:'Pago de Vega', sub:'Bordeaux Blend', type:'red', typeLabel:'Red Wine', grapes:'Cabernet Sauvignon, Cabernet Franc, Merlot', region:'Dolores Hidalgo, Guanajuato', production:'5,200 bottles/year', winemaker:'Juan Manchón', sight:'Medium-layer plum red', nose:'Ripe red fruits, blackcurrant, white pepper, undergrowth, moss, truffle', palate:'Fine and persistent attack, fresh acidity, broad on the palate', serving:'18°C (64°F)', pairing:'Lean meats, grilled cuts, aged cheeses', vin:'Selection of finest vineyards — soils contribute an elegant mineral character · Cold pre-fermentation maceration · Aged 12 months in new French oak barrels', awards:[{m:'⭐',t:'96 points — Guía Catadores 2023'},{m:'⭐',t:'97 points — Guía Catadores 2022'},{m:'🥇',t:'Gold Medal — Concours Mondial de Bruxelles 2022'},{m:'🥇',t:'Gold Medal — Les Citadelles du Vin, Bordeaux 2019'}], top:'97 pts Guía Catadores · Gold CMB 2022' },
-    { id:'gran-pago', winery:'cuna', collection:'Cuna de Tierra', img:'gran-pago-de-vega.webp', name:'Gran Pago de Vega', sub:'Bordeaux Blend — 50 Months', type:'red', typeLabel:'Red Wine', grapes:'Cabernet Sauvignon, Cabernet Franc, Merlot', region:'Dolores Hidalgo, Guanajuato', production:'1,200 bottles/year', winemaker:'Juan Manchón', sight:'Medium-layer plum red', nose:'Ripe red fruits, blackcurrant, white pepper, undergrowth, truffle', palate:'Fine and persistent attack, silky tannins. Broad and elegant', serving:'18°C (64°F)', pairing:'Lean meats, grilled cuts, aged cheeses', vin:'Selection of finest vineyards — soils contribute wet earth and minerality · Perfected through 50 months of aging', awards:[{m:'⭐',t:'97 points — Best Cabernet Blend by Guía Catadores 2024'}], top:'Best Cabernet Blend — 97 pts Guía Catadores 2024' },
-    { id:'lloro-de-tierra', winery:'cuna', collection:'Cuna de Tierra', img:'lloro-de-tierra.webp', name:'Lloro de Tierra', sub:'Mistelle', type:'fortified', typeLabel:'Fortified Wine', grapes:'Fantasy, Garnacha, Muscat', region:'Dolores Hidalgo, Guanajuato', production:'7,500 bottles/year', winemaker:'Juan Manchón', sight:'Mahogany color with amber highlights', nose:'Sweet notes of dried fruits: date, prune, dried fig, orange, honey, and coffee', palate:'Intense flavor and long finish, with notes of oak, toasted nuances, and dried fruits', serving:'8°C (46°F)', pairing:'Fruit tarts, dark chocolate, tiramisu, or cajeta crepes', vin:'Fermentation halted after 20% of sugars have converted, with addition of vinous alcohol · Dynamic aging in American white oak using the Jerez-style solera system, with 4-year-old soleras', awards:[{m:'🏆',t:'Grand Gold Medal — Concours Mondial de Bruxelles (Mexico Edition) 2021'},{m:'🥇',t:'Gold Medal — Ensenada Tierra de Vinos Wine Competition 2019'}], top:'Grand Gold — Concours Mondial de Bruxelles 2021' },
     /* ════ CONCIERTO ENOLÓGICO ════ */
     { id:'allegro', winery:'concierto', collection:'Concierto Enológico', img:'allegro_2022.webp', name:'Allegro', sub:'2022', type:'white', typeLabel:'White Wine', grapes:'Chardonnay, Sauvignon Blanc', region:'Valle de Guadalupe, Baja California', alcohol:'13.4%', aging:'3 months in French oak barrels', sight:'Medium intensity, yellow straw with gold flashes', nose:'Notes of honey, pineapple, dried fruits, peppers, guava, lemon, white flowers, and lemongrass', palate:'Medium acidity with a refreshing taste; persistent, well-balanced finish', serving:'10°C – 12°C (50–54°F)', pairing:'Fresh ceviche, grilled fish, shrimp tacos, tropical fruit salads, soft cheeses', vin:'3 months aging in French oak barrels · Cold low-temperature fermentation to preserve aromatic freshness · Careful selection of Chardonnay and Sauvignon Blanc from Valle de Guadalupe', awards:[{m:'🥇',t:'Gold — XXII International Competition of Bacchus Wines 2024'},{m:'⭐',t:'87 points — Peñín Guide 2021'}], top:'Gold — Bacchus Wines 2024' },
     { id:'vivacce', winery:'concierto', collection:'Concierto Enológico', img:'vivacce_2022.webp', name:'Vivacce', sub:'2022', type:'rose', typeLabel:'Rosé Wine', grapes:'100% Grenache', region:'Valle de Guadalupe, Baja California', alcohol:'12.9%', aging:null, sight:'Pale salmon with golden flashes', nose:'Very aromatic — notes of peach, strawberry, rose petals, and a touch of grapefruit skin', palate:'Medium acidity, subtle and elegant, with persistent fruity notes', serving:'10°C – 12°C (50–54°F)', pairing:'Charcuterie boards, grilled salmon, summer salads, caprese, light tapas', vin:'Direct press of 100% Grenache · Cold low-temperature fermentation to preserve aromatic freshness · Gentle handling to achieve the signature pale salmon hue', awards:[{m:'🥇',t:'Gold — México Selection by CMB / Concours Mondial de Bruxelles 2023 Yucatán'},{m:'🥇',t:'Gold — México International Wine Competition 2023'},{m:'⭐',t:'86 points — Peñín Guide 2022'},{m:'🏅',t:'México International Wine Competition 2024'}], top:'Double Gold — CMB Yucatán & México International Wine Competition 2023' },
@@ -650,7 +648,10 @@
   function cMaxIdx()  { return Math.max(0, cList.length - cVisible()); }
 
   function cGoTo(idx, animate=true) {
-    cIdx = Math.max(0, Math.min(idx, cMaxIdx()));
+    const max = cMaxIdx();
+    if (idx < 0) idx = max;
+    else if (idx > max) idx = 0;
+    cIdx = idx;
     const track = document.getElementById('pfCarouselTrack');
     if (track) {
       track.style.transition = animate ? 'transform .55s cubic-bezier(.25,.46,.45,.94)' : 'none';
@@ -663,8 +664,8 @@
     const prev   = document.getElementById('pfCarouselPrev');
     const next   = document.getElementById('pfCarouselNext');
     const dotsEl = document.getElementById('pfCarouselDots');
-    if (prev) prev.disabled = cIdx === 0;
-    if (next) next.disabled = cIdx >= cMaxIdx();
+    if (prev) prev.disabled = false;
+    if (next) next.disabled = false;
     if (!dotsEl) return;
     const steps = cMaxIdx() + 1;
     if (steps <= 7) {
