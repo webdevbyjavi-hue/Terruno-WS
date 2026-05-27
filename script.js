@@ -370,6 +370,11 @@
 
   const SECONDARY_STATES = new Set(['sonora', 'coahuila', 'durango', 'zacatecas', 'aguascalientes', 'queretaro']);
 
+  // Manual nudges (in SVG viewBox units) to correct D3 centroid placement
+  const CENTROID_OFFSETS = {
+    'guanajuato': [0, -12],
+  };
+
   let activeWinery = 'cuna';
   let stateEls     = {};
   let centroids    = {};
@@ -441,11 +446,16 @@
       const g = document.createElementNS(ns, 'g');
       g.setAttribute('class', 'rm-arrow-g');
 
-      const pulse = document.createElementNS(ns, 'circle');
-      pulse.setAttribute('cx', sx); pulse.setAttribute('cy', sy); pulse.setAttribute('r', 8);
-      pulse.setAttribute('fill', isActive ? 'rgba(212,185,122,0.35)' : 'rgba(212,185,122,0.15)');
-      pulse.setAttribute('class', 'pf-arrow-pulse');
-      g.appendChild(pulse);
+      [0, 1].forEach(function(i) {
+        const ring = document.createElementNS(ns, 'circle');
+        ring.setAttribute('cx', sx); ring.setAttribute('cy', sy); ring.setAttribute('r', 5);
+        ring.setAttribute('fill', isActive
+          ? (i === 0 ? 'rgba(241,237,222,0.75)' : 'rgba(241,237,222,0.45)')
+          : (i === 0 ? 'rgba(241,237,222,0.35)' : 'rgba(241,237,222,0.18)'));
+        ring.setAttribute('class', 'pf-arrow-pulse');
+        ring.style.animationDelay = (i * -1.1) + 's';
+        g.appendChild(ring);
+      });
 
       const dot = document.createElementNS(ns, 'circle');
       dot.setAttribute('cx', sx); dot.setAttribute('cy', sy); dot.setAttribute('r', 3.5);
@@ -453,7 +463,7 @@
       g.appendChild(dot);
 
       const path = document.createElementNS(ns, 'path');
-      path.setAttribute('d', 'M ' + sx + ' ' + sy + ' C ' + cp1x + ' ' + cp1y + ', ' + cp2x + ' ' + cp2y + ', ' + ex + ' ' + ey);
+      path.setAttribute('d', 'M ' + ex + ' ' + ey + ' C ' + cp2x + ' ' + cp2y + ', ' + cp1x + ' ' + cp1y + ', ' + sx + ' ' + sy);
       path.setAttribute('fill', 'none');
       path.setAttribute('stroke', isActive ? 'rgba(212,185,122,0.7)' : 'rgba(212,185,122,0.3)');
       path.setAttribute('stroke-width', isActive ? 1.5 : 1);
@@ -521,7 +531,10 @@
           if (wk) {
             stateEls[key] = this;
             const c = pathGen.centroid(d);
-            if (c && !isNaN(c[0])) centroids[key] = c;
+            if (c && !isNaN(c[0])) {
+              const off = CENTROID_OFFSETS[key] || [0, 0];
+              centroids[key] = [c[0] + off[0], c[1] + off[1]];
+            }
           }
           let fill = FILL_DEFAULT;
           if (wk) {

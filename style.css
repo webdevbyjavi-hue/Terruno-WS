@@ -2107,14 +2107,14 @@ blockquote cite {
 }
 
 @keyframes pf-map-pulse {
-  0%   { opacity: 0.5; transform: scale(1); }
-  70%  { opacity: 0;   transform: scale(2); }
-  100% { opacity: 0;   transform: scale(2); }
+  0%   { opacity: 1;   transform: scale(1); }
+  65%  { opacity: 0;   transform: scale(4); }
+  100% { opacity: 0;   transform: scale(4); }
 }
 .pf-arrow-pulse {
   transform-box: fill-box;
   transform-origin: center;
-  animation: pf-map-pulse 2.4s ease-out infinite;
+  animation: pf-map-pulse 2.2s ease-out infinite;
 }
 
 @media (max-width: 680px) {
