@@ -1,5 +1,22 @@
-# Google Apps Script — contains backend logic, kept out of version control
+# Google Apps Script — backend logic, not deployed with the site
 terruno-apps-script.gs
+
+# Claude Code project instructions — internal dev tooling
+CLAUDE.md
+
+# Leftover TypeScript/React prototype files (site is plain HTML/CSS/JS)
+MexicoMap.tsx
+MexicoMap.css
+declarations.d.ts
+tsconfig.json
+
+# Environment — never commit secrets
+.env.local
+.env*.local
+
+# Dependencies
+node_modules/
 
 # macOS
 .DS_Store
+.vercel

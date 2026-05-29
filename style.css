@@ -410,7 +410,7 @@ button { cursor: pointer; font: inherit; border: none; background: none; }
 .hero__bg {
   position: absolute;
   inset: -30% 0;
-  background: url('assets/hero3.jpeg') center center / cover no-repeat;
+  background: url('assets/hero3.webp') center center / cover no-repeat;
   will-change: transform;
 }
 
@@ -716,277 +716,8 @@ button { cursor: pointer; font: inherit; border: none; background: none; }
 /* =============================================================
    PORTFOLIO
 ============================================================= */
-.portfolio__header {
-  text-align: center;
-  max-width: 640px;
-  margin: 0 auto var(--space-lg);
-}
-.portfolio__intro {
-  font-size: 0.95rem;
-  line-height: 1.85;
-  color: var(--color-text-muted);
-}
 
-.portfolio__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-md);
-}
 
-.product-card {
-  background: var(--color-cream);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  transition: transform 0.35s var(--ease-out-quart), box-shadow 0.35s;
-  transition-delay: calc(var(--i, 0) * 0.1s);
-}
-.product-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 24px 64px rgba(69,68,17,0.14);
-}
-.product-card__img {
-  position: relative;
-  aspect-ratio: 4/3;
-  overflow: hidden;
-}
-.product-card__img-bg {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-sm);
-  transition: transform 0.5s var(--ease-out-quart);
-}
-.product-card:hover .product-card__img-bg {
-  transform: scale(1.04);
-}
-.product-card__img-bg svg { width: 100%; height: 100%; }
-
-.product-card__img-bg--wine   { background: linear-gradient(135deg, #e8d8b0 0%, #c8a86a 100%); }
-.product-card__img-bg--mezcal { background: linear-gradient(135deg, #c8c0a0 0%, #9a9070 100%); }
-.product-card__img-bg--spirits { background: linear-gradient(135deg, #d8c8a0 0%, #b09060 100%); }
-
-.product-card__tag {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  font-family: var(--font-ui);
-  font-size: 0.6rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: #fff;
-  background: rgba(69,68,17,0.7);
-  padding: 0.3rem 0.8rem;
-  border-radius: var(--radius-full);
-  backdrop-filter: blur(4px);
-}
-.product-card__body {
-  padding: 1.5rem;
-}
-.product-card__region {
-  display: block;
-  font-family: var(--font-ui);
-  font-size: 0.62rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--color-sage);
-  margin-bottom: 0.4rem;
-}
-.product-card__name {
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: var(--color-forest);
-  margin-bottom: 0.6rem;
-  line-height: 1.2;
-}
-.product-card__desc {
-  font-size: 0.875rem;
-  line-height: 1.75;
-  color: var(--color-text-muted);
-  margin-bottom: 1rem;
-}
-.product-card__footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--color-border);
-}
-.product-card__type {
-  font-family: var(--font-ui);
-  font-size: 0.62rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--color-sage);
-}
-.product-card__arrow {
-  font-size: 1rem;
-  color: var(--color-forest);
-  transform: translateX(0);
-  transition: transform 0.25s;
-}
-.product-card:hover .product-card__arrow { transform: translateX(4px); }
-
-.portfolio__cta {
-  text-align: center;
-  margin-top: var(--space-lg);
-}
-
-/* ── Winery showcase cards ── */
-.winery-cards {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-md);
-}
-
-.winery-card {
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  border: 1px solid var(--color-border);
-  transition: transform 0.35s var(--ease-out-quart), box-shadow 0.35s;
-  transition-delay: calc(var(--i, 0) * 0.12s);
-}
-.winery-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 28px 64px rgba(69,68,17,0.15);
-}
-
-.winery-card__head {
-  padding: 2rem 2rem 1.75rem;
-  position: relative;
-  overflow: hidden;
-}
-.winery-card__head--cuna {
-  background:
-    linear-gradient(145deg, rgba(46,44,11,0.72) 0%, rgba(69,68,17,0.60) 55%, rgba(90,88,21,0.55) 100%),
-    url('assets/cuna-de-tierra/cuna-de-tierra.avif') center center / cover no-repeat;
-}
-.winery-card__head--concierto {
-  background:
-    linear-gradient(145deg, rgba(62,52,8,0.72) 0%, rgba(94,80,16,0.60) 55%, rgba(121,120,83,0.55) 100%),
-    url('assets/concierto-enologico/concierto-enologico.jpeg') center center / cover no-repeat;
-}
-
-.winery-card__head::after,
-.winery-card__head::before {
-  content: '';
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.08);
-}
-.winery-card__head::after  { width: 170px; height: 170px; bottom: -65px; right: -35px; }
-.winery-card__head::before { width: 95px;  height: 95px;  bottom: -18px; right: 44px; background: rgba(255,255,255,0.03); }
-
-.winery-card__types {
-  display: flex;
-  gap: 0.4rem;
-  flex-wrap: wrap;
-  margin-bottom: 1.25rem;
-}
-.winery-type-pill {
-  font-family: var(--font-ui);
-  font-size: 0.52rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  padding: 0.22rem 0.65rem;
-  border-radius: var(--radius-full);
-  background: rgba(255,255,255,0.16);
-  color: rgba(255,255,255,0.85);
-  border: 1px solid rgba(255,255,255,0.2);
-}
-
-.winery-card__region {
-  font-family: var(--font-ui);
-  font-size: 0.6rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.5);
-  margin-bottom: 0.3rem;
-}
-.winery-card__name {
-  font-family: var(--font-display);
-  font-size: 1.85rem;
-  font-weight: 700;
-  color: #fff;
-  line-height: 1.15;
-  margin-bottom: 1.5rem;
-}
-
-.winery-card__stats {
-  display: flex;
-  gap: 1.75rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid rgba(255,255,255,0.12);
-}
-.winery-stat {
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
-}
-.winery-stat__n {
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #fff;
-}
-.winery-stat__t {
-  font-family: var(--font-ui);
-  font-size: 0.56rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.5);
-}
-
-.winery-card__body {
-  padding: 1.75rem 2rem;
-  background: var(--color-cream);
-}
-.winery-card__desc {
-  font-size: 0.875rem;
-  line-height: 1.8;
-  color: var(--color-text-muted);
-  margin-bottom: 1.25rem;
-}
-.winery-card__awards {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  padding-bottom: 1.25rem;
-  border-bottom: 1px solid var(--color-border);
-  margin-bottom: 1.25rem;
-}
-.winery-card__award-item {
-  font-size: 0.75rem;
-  color: var(--color-forest);
-  line-height: 1.55;
-}
-.winery-card__link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-family: var(--font-ui);
-  font-size: 0.63rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-forest);
-  text-decoration: none;
-  transition: gap 0.22s;
-}
-.winery-card__link:hover { gap: 0.65rem; }
-
-@media (max-width: 720px) {
-  .winery-cards { grid-template-columns: 1fr; }
-}
 
 
 /* =============================================================
@@ -1005,85 +736,6 @@ button { cursor: pointer; font: inherit; border: none; background: none; }
   margin-bottom: 0;
 }
 
-.stores-carousel {
-  max-width: 1200px;
-  margin: 3rem auto 0;
-  padding: 0 2rem 5rem;
-}
-
-.stores-carousel__viewport { overflow: hidden; }
-
-.stores-carousel__track {
-  display: flex;
-  gap: 1.5rem;
-  transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  will-change: transform;
-}
-
-.store-card {
-  flex: 0 0 var(--store-card-w, 340px);
-  background: var(--color-cream);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: 2rem 2rem 2.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.store-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(69,68,17,0.1);
-}
-
-.store-card__type {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #fff;
-  background: var(--color-forest);
-  border-radius: var(--radius-full);
-  padding: 0.3rem 0.85rem;
-  display: inline-block;
-  align-self: flex-start;
-  margin-bottom: 0.4rem;
-}
-
-.store-card__name {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--color-forest);
-  line-height: 1.3;
-}
-
-.store-card__location {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-text-muted);
-}
-
-.store-card__desc {
-  font-family: 'Aileron', 'Montserrat', sans-serif;
-  font-size: 0.9rem;
-  color: var(--color-text-muted);
-  line-height: 1.75;
-  margin-top: 0.25rem;
-}
-
-.stores-carousel__nav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.25rem;
-  margin-top: 2.5rem;
-}
 
 /* ── Infinite Marquee (Where to Find Us) ── */
 /* Card: 288px wide · gap: 24px · 9 cards → one-set offset = 9 × 312 = 2808px */
@@ -1421,105 +1073,6 @@ blockquote cite {
 }
 
 
-/* =============================================================
-   MARKETS
-============================================================= */
-.markets {
-  background: rgba(69,68,17,0.03);
-}
-.markets__inner {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 0 var(--space-md);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-2xl);
-  align-items: start;
-}
-.markets__expansion { margin-top: var(--space-md); }
-.expansion-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-.tag {
-  font-family: var(--font-ui);
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  padding: 0.4rem 1rem;
-  border-radius: var(--radius-full);
-  border: 1px solid var(--color-border);
-  color: var(--color-text-muted);
-  transition: background 0.25s, color 0.25s, border-color 0.25s;
-}
-.tag:hover {
-  background: rgba(69,68,17,0.06);
-  border-color: var(--color-sage);
-  color: var(--color-forest);
-}
-.tag--active {
-  background: var(--color-forest);
-  color: #fff;
-  border-color: var(--color-forest);
-}
-
-/* Timeline */
-.timeline {
-  position: relative;
-  padding-left: 2rem;
-}
-.timeline::before {
-  content: '';
-  position: absolute;
-  top: 8px;
-  left: 6px;
-  bottom: 8px;
-  width: 1px;
-  background: var(--color-border);
-}
-.timeline__item {
-  position: relative;
-  padding-bottom: var(--space-md);
-  opacity: 0.45;
-  transition: opacity 0.3s;
-}
-.timeline__item--active { opacity: 1; }
-.timeline__item:last-child { padding-bottom: 0; }
-.timeline__dot {
-  position: absolute;
-  left: -2rem;
-  top: 5px;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  border: 2px solid var(--color-border);
-  background: var(--color-cream);
-  transition: background 0.3s, border-color 0.3s;
-}
-.timeline__item--active .timeline__dot {
-  background: var(--color-forest);
-  border-color: var(--color-forest);
-}
-.timeline__content {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-.timeline__year {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--color-forest);
-  line-height: 1.1;
-}
-.timeline__event {
-  font-family: var(--font-ui);
-  font-size: 0.78rem;
-  font-weight: 400;
-  color: var(--color-text-muted);
-}
 
 
 /* =============================================================
@@ -2061,13 +1614,11 @@ blockquote cite {
 }
 
 @media (max-width: 1024px) {
-  .stores-carousel { padding: 0 1rem 4rem; }
 
   .story__inner { grid-template-columns: 1fr; gap: var(--space-lg); }
   .story__visual { max-width: 420px; }
   .contact__inner { grid-template-columns: 1fr; }
   .contact__header { position: static; }
-  .markets__inner { grid-template-columns: 1fr; gap: var(--space-lg); }
   .footer__inner { grid-template-columns: 1fr 1fr; }
   .footer__brand { grid-column: 1 / -1; }
 
@@ -2083,8 +1634,7 @@ blockquote cite {
   .section { padding: var(--space-lg) 0; }
 
   .mission__pillars { grid-template-columns: 1fr; }
-  .portfolio__grid { grid-template-columns: 1fr; }
-  .team__grid { max-width: 420px; }
+  .team__grid { max-width: 100%; }
   .team-card { flex-direction: column; }
   .team-card__photo { flex: none; height: 200px; }
   .team-card__info { border-left: none; border-top: 1px solid var(--color-border); justify-content: flex-start; }
@@ -2111,11 +1661,15 @@ blockquote cite {
   .pf-filters { padding: 0 1rem 2rem; }
   .wine-carousel { padding: 0 1rem 4rem; }
 
-  /* Hide decorative overflow circles on small phones */
-  .winery-card__head::after,
-  .winery-card__head::before { display: none; }
 }
 
+
+@media (hover: none) {
+  .wine-card:hover { transform: none; box-shadow: none; }
+  .venue-card:hover { transform: none; box-shadow: none; }
+  .pillar:hover { transform: none; box-shadow: none; }
+  .team-card:hover { transform: none; box-shadow: none; }
+}
 
 /* =============================================================
    REDUCED MOTION
@@ -2158,7 +1712,7 @@ blockquote cite {
   opacity: 1;
 }
 .pf-intro-bg .hero-bg-layer--concierto {
-  background-image: url('assets/concierto-enologico/concierto-enologico.jpeg');
+  background-image: url('assets/concierto-enologico/concierto-enologico.webp');
 }
 .pf-intro-bg .hero-bg-layer::after {
   content: '';

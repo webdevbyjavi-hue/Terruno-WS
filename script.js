@@ -108,6 +108,12 @@
     animId = requestAnimationFrame(tick);
   }
 
+  // Skip heavy canvas animation on mobile to preserve battery/performance
+  if (window.matchMedia('(max-width: 768px)').matches) {
+    canvas.style.display = 'none';
+    return;
+  }
+
   function start() {
     resize();
     initParticles();
@@ -138,7 +144,7 @@
 /* ── Animated Leaves ─────────────────────────────────────────── */
 (function initLeaves() {
   const container = document.getElementById('heroLeaves');
-  if (!container) return;
+  if (!container || window.matchMedia('(max-width: 768px)').matches) return;
 
   const LEAF_COUNT = 18;
 
@@ -227,7 +233,7 @@
 /* ── Parallax on hero hills ──────────────────────────────────── */
 (function initParallax() {
   const layers = document.querySelectorAll('[data-parallax]');
-  if (!layers.length) return;
+  if (!layers.length || window.matchMedia('(max-width: 768px)').matches) return;
 
   function onScroll() {
     const y = window.scrollY;
@@ -344,6 +350,17 @@ function getClientMeta() {
 }
 
 
+/* ── Visit Counter ───────────────────────────────────────────── */
+(function trackVisit() {
+  try {
+    const key   = 'tws_visits';
+    const count = parseInt(localStorage.getItem(key) || '0', 10) + 1;
+    localStorage.setItem(key, String(count));
+    window._twsVisitCount = count;
+  } catch (e) { window._twsVisitCount = 1; }
+})();
+
+
 /* ── Contact Form ────────────────────────────────────────────── */
 (function initForm() {
   const form    = document.getElementById('contactForm');
@@ -351,7 +368,7 @@ function getClientMeta() {
   const btn     = document.getElementById('submitBtn');
   if (!form) return;
 
-  const SHEET_URL      = 'https://script.google.com/macros/s/AKfycbyJZWXW8IkoZlObu920GQov3cfoELjEpL0-ObdE_Zz8kYWVXhnswUdTCRJPfmO5cicu/exec';
+  const CONTACT_URL    = '/api/contact';
   const MIN_MS         = 3000;        // reject if submitted in < 3s
   const MAX_MS         = 1800000;     // reject if form is > 30min stale
   const RATE_KEY       = 'tws_rate';
@@ -362,9 +379,7 @@ function getClientMeta() {
   const _renderedAt = Date.now();
 
   function sanitize(str) {
-    return str.replace(/<[^>]*>/g, '').replace(/[&<>"']/g, c => ({
-      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
-    }[c])).trim();
+    return str.replace(/<[^>]*>/g, '').trim();
   }
 
   function isRateLimited() {
@@ -441,24 +456,37 @@ function getClientMeta() {
     btn.disabled = true;
     btn.querySelector('.btn-submit__text').textContent = 'Sending…';
 
+    const meta    = getClientMeta();
+    const company = sanitize(form.company.value);
+    const message = sanitize(form.message.value);
+
     const payload = {
-      firstName: sanitize(form.firstName.value),
-      lastName:  sanitize(form.lastName.value),
-      email:     sanitize(emailVal),
-      phone:     sanitize(form.phone.value),
-      company:   sanitize(form.company.value),
-      message:   sanitize(form.message.value),
-      _hp:         (hp && hp.value) ? hp.value : '',
-      _renderedAt: _renderedAt,
-      ...getClientMeta(),
+      name:          sanitize(form.firstName.value) + ' ' + sanitize(form.lastName.value),
+      email:         sanitize(emailVal),
+      phone:         sanitize(form.phone.value),
+      details:       company && message ? 'Company: ' + company + '\n\n' + message
+                     : company || message || '',
+      pageUrl:       meta.pageUrl,
+      referrer:      meta.referrer,
+      userAgent:     navigator.userAgent,
+      language:      meta.language,
+      screenSize:    screen.width + 'x' + screen.height,
+      timezone:      meta.timezone,
+      timeOnPage:    Math.round((Date.now() - _renderedAt) / 1000) + 's',
+      visitCount:    String(window._twsVisitCount || 1),
+      localDateTime: new Date().toLocaleString(),
+      _hp:           (hp && hp.value) ? hp.value : '',
+      _renderedAt:   _renderedAt,
     };
 
-    fetch(SHEET_URL, {
-      method: 'POST',
-      mode:   'no-cors',
-      body:   JSON.stringify(payload),
+    fetch(CONTACT_URL, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(payload),
     })
-      .then(() => {
+      .then(r => r.json())
+      .then(json => {
+        if (json.status !== 'ok') throw new Error(json.message || 'error');
         recordSubmission();
         form.querySelectorAll('.form-input').forEach(el => el.value = '');
         btn.style.display = 'none';
@@ -1011,95 +1039,24 @@ function getClientMeta() {
   /* ── Carousel events ── */
   document.getElementById('pfCarouselPrev').addEventListener('click', () => { cGoTo(cIdx - 1); cResetTimer(); });
   document.getElementById('pfCarouselNext').addEventListener('click', () => { cGoTo(cIdx + 1); cResetTimer(); });
-  document.getElementById('pfCarouselViewport').addEventListener('mouseenter', () => { cPaused = true; });
-  document.getElementById('pfCarouselViewport').addEventListener('mouseleave', () => { cPaused = false; });
+  const pfVp = document.getElementById('pfCarouselViewport');
+  pfVp.addEventListener('mouseenter', () => { cPaused = true; });
+  pfVp.addEventListener('mouseleave', () => { cPaused = false; });
+
+  let pfTouchX = null;
+  pfVp.addEventListener('touchstart', e => { pfTouchX = e.touches[0].clientX; cPaused = true; }, { passive: true });
+  pfVp.addEventListener('touchend', e => {
+    if (pfTouchX === null) return;
+    const dx = e.changedTouches[0].clientX - pfTouchX;
+    if (Math.abs(dx) > 40) { cGoTo(dx < 0 ? cIdx + 1 : cIdx - 1); cResetTimer(); }
+    pfTouchX = null;
+    cPaused = false;
+  }, { passive: true });
+
   let pfResizeT;
   window.addEventListener('resize', () => { clearTimeout(pfResizeT); pfResizeT = setTimeout(cResize, 100); });
 })();
 
-
-/* ── Stores Carousel ── */
-(function () {
-  const track   = document.getElementById('storesCarouselTrack');
-  const viewport = document.getElementById('storesCarouselViewport');
-  const prevBtn = document.getElementById('storesPrev');
-  const nextBtn = document.getElementById('storesNext');
-  const dotsEl  = document.getElementById('storesDots');
-  if (!track) return;
-
-  const GAP = 24;
-  let idx = 0;
-  let paused = false;
-  let timer;
-
-  function visible() {
-    const w = window.innerWidth;
-    if (w >= 1024) return 3;
-    if (w >= 640)  return 2;
-    return 1;
-  }
-
-  function cardW() {
-    return (viewport.offsetWidth - (visible() - 1) * GAP) / visible();
-  }
-
-  const cards = track.querySelectorAll('.store-card');
-  const steps = Math.ceil(cards.length / visible());
-
-  function setWidths() {
-    const w = cardW();
-    cards.forEach(c => { c.style.flex = `0 0 ${w}px`; });
-  }
-
-  function buildDots() {
-    dotsEl.innerHTML = '';
-    const count = Math.ceil(cards.length / visible());
-    for (let i = 0; i < count; i++) {
-      const d = document.createElement('button');
-      d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-      d.setAttribute('aria-label', `Go to store ${i + 1}`);
-      d.addEventListener('click', () => goTo(i));
-      dotsEl.appendChild(d);
-    }
-  }
-
-  function goTo(n) {
-    const count = Math.ceil(cards.length / visible());
-    idx = Math.max(0, Math.min(n, count - 1));
-    track.style.transform = `translateX(-${idx * (cardW() + GAP)}px)`;
-    prevBtn.disabled = idx === 0;
-    nextBtn.disabled = idx === count - 1;
-    dotsEl.querySelectorAll('.carousel-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
-  }
-
-  function resize() {
-    setWidths();
-    buildDots();
-    goTo(0);
-  }
-
-  function resetTimer() {
-    clearInterval(timer);
-    timer = setInterval(() => {
-      if (paused) return;
-      const count = Math.ceil(cards.length / visible());
-      goTo(idx < count - 1 ? idx + 1 : 0);
-    }, 4000);
-  }
-
-  setWidths();
-  buildDots();
-  goTo(0);
-  resetTimer();
-
-  prevBtn.addEventListener('click', () => { goTo(idx - 1); resetTimer(); });
-  nextBtn.addEventListener('click', () => { goTo(idx + 1); resetTimer(); });
-  viewport.addEventListener('mouseenter', () => { paused = true; });
-  viewport.addEventListener('mouseleave', () => { paused = false; });
-
-  let resizeT;
-  window.addEventListener('resize', () => { clearTimeout(resizeT); resizeT = setTimeout(resize, 100); });
-})();
 
 
 /* ── Portfolio Region Map (arrows from states → winery cards) ── */
