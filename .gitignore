@@ -1,0 +1,5 @@
+# Google Apps Script — contains backend logic, kept out of version control
+terruno-apps-script.gs
+
+# macOS
+.DS_Store

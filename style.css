@@ -410,7 +410,7 @@ button { cursor: pointer; font: inherit; border: none; background: none; }
 .hero__bg {
   position: absolute;
   inset: -30% 0;
-  background: url('assets/background.jpg') center center / cover no-repeat;
+  background: url('assets/hero3.jpeg') center center / cover no-repeat;
   will-change: transform;
 }
 
@@ -986,6 +986,225 @@ button { cursor: pointer; font: inherit; border: none; background: none; }
 
 @media (max-width: 720px) {
   .winery-cards { grid-template-columns: 1fr; }
+}
+
+
+/* =============================================================
+   WHERE TO FIND US — STORES CAROUSEL
+============================================================= */
+.stores { overflow: hidden; }
+
+.stores__header { text-align: center; max-width: 620px; margin: 0 auto; }
+
+.stores__subtitle {
+  font-family: 'Aileron', 'Montserrat', sans-serif;
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  line-height: 1.75;
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
+
+.stores-carousel {
+  max-width: 1200px;
+  margin: 3rem auto 0;
+  padding: 0 2rem 5rem;
+}
+
+.stores-carousel__viewport { overflow: hidden; }
+
+.stores-carousel__track {
+  display: flex;
+  gap: 1.5rem;
+  transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+.store-card {
+  flex: 0 0 var(--store-card-w, 340px);
+  background: var(--color-cream);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 2rem 2rem 2.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.store-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(69,68,17,0.1);
+}
+
+.store-card__type {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--color-forest);
+  border-radius: var(--radius-full);
+  padding: 0.3rem 0.85rem;
+  display: inline-block;
+  align-self: flex-start;
+  margin-bottom: 0.4rem;
+}
+
+.store-card__name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-forest);
+  line-height: 1.3;
+}
+
+.store-card__location {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.store-card__desc {
+  font-family: 'Aileron', 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  line-height: 1.75;
+  margin-top: 0.25rem;
+}
+
+.stores-carousel__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+}
+
+/* ── Infinite Marquee (Where to Find Us) ── */
+/* Card: 288px wide · gap: 24px · 9 cards → one-set offset = 9 × 312 = 2808px */
+.stores-marquee {
+  position: relative;
+  overflow: hidden;
+  margin-top: 3rem;
+  padding: 1rem 0 3.5rem;
+}
+
+.stores-marquee__fade {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 12%;
+  z-index: 2;
+  pointer-events: none;
+}
+.stores-marquee__fade--left  { left:  0; background: linear-gradient(to right, var(--color-bg), transparent); }
+.stores-marquee__fade--right { right: 0; background: linear-gradient(to left,  var(--color-bg), transparent); }
+
+.stores-marquee__track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  animation: storesScroll 48s linear infinite;
+  will-change: transform;
+}
+.stores-marquee__track:hover { animation-play-state: paused; }
+
+@keyframes storesScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-2808px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stores-marquee__track { animation-play-state: paused; }
+}
+
+/* Venue cards */
+.venue-card {
+  flex: 0 0 288px;
+  background: var(--color-cream);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform 0.35s var(--ease-out-quart), box-shadow 0.35s;
+  user-select: none;
+}
+.venue-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 52px rgba(69,68,17,0.12);
+}
+
+.venue-card__img {
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  position: relative;
+}
+
+.venue-card__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.55s var(--ease-out-quart);
+}
+
+.venue-card:hover .venue-card__photo {
+  transform: scale(1.06);
+}
+
+.venue-card__body {
+  padding: 1rem 1.25rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.venue-card__name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-forest);
+  line-height: 1.25;
+}
+
+.venue-card__area {
+  font-family: var(--font-ui);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+  margin-bottom: 0.35rem;
+}
+
+.venue-card__maps-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-ui);
+  font-size: 0.56rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--color-forest);
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--radius-full);
+  align-self: flex-start;
+  margin-top: 0.4rem;
+  transition: background 0.25s, transform 0.2s;
+}
+.venue-card__maps-btn:hover {
+  background: #5e5f16;
+  transform: translateY(-1px);
+}
+.venue-card__maps-btn svg {
+  width: 11px;
+  height: 11px;
+  flex-shrink: 0;
 }
 
 
@@ -1842,6 +2061,8 @@ blockquote cite {
 }
 
 @media (max-width: 1024px) {
+  .stores-carousel { padding: 0 1rem 4rem; }
+
   .story__inner { grid-template-columns: 1fr; gap: var(--space-lg); }
   .story__visual { max-width: 420px; }
   .contact__inner { grid-template-columns: 1fr; }

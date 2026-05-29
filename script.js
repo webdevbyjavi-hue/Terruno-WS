@@ -291,6 +291,59 @@
 })();
 
 
+/* ── Client Metadata ─────────────────────────────────────────── */
+function getClientMeta() {
+  const ua = navigator.userAgent;
+
+  let deviceType = 'Desktop';
+  if (/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua))
+    deviceType = /iPad|Tablet/i.test(ua) ? 'Tablet' : 'Mobile';
+
+  let browser = 'Unknown';
+  const edgeM    = ua.match(/Edg\/([\d.]+)/);
+  const oprM     = ua.match(/OPR\/([\d.]+)/);
+  const chromeM  = ua.match(/Chrome\/([\d.]+)/);
+  const firefoxM = ua.match(/Firefox\/([\d.]+)/);
+  const safariM  = ua.match(/Version\/([\d.]+)/);
+  if      (edgeM)    browser = `Edge ${edgeM[1]}`;
+  else if (oprM)     browser = `Opera ${oprM[1]}`;
+  else if (chromeM)  browser = `Chrome ${chromeM[1]}`;
+  else if (firefoxM) browser = `Firefox ${firefoxM[1]}`;
+  else if (safariM)  browser = `Safari ${safariM[1]}`;
+
+  let os = 'Unknown';
+  if      (/Windows NT 10/.test(ua))       os = 'Windows 10/11';
+  else if (/Windows NT 6\.3/.test(ua))     os = 'Windows 8.1';
+  else if (/Windows NT 6\.1/.test(ua))     os = 'Windows 7';
+  else if (/Windows/.test(ua))             os = 'Windows';
+  else if (/Mac OS X ([\d_]+)/.test(ua))   os = `macOS ${ua.match(/Mac OS X ([\d_]+)/)[1].replace(/_/g, '.')}`;
+  else if (/Android ([\d.]+)/.test(ua))    os = `Android ${ua.match(/Android ([\d.]+)/)[1]}`;
+  else if (/iPhone|iPad|iPod/.test(ua)) {
+    const iosV = ua.match(/OS ([\d_]+)/);
+    os = iosV ? `iOS ${iosV[1].replace(/_/g, '.')}` : 'iOS';
+  }
+  else if (/Linux/.test(ua)) os = 'Linux';
+
+  return {
+    deviceType,
+    browser,
+    os,
+    screenRes:  `${screen.width}×${screen.height}`,
+    viewport:   `${window.innerWidth}×${window.innerHeight}`,
+    language:   navigator.language || '',
+    timezone:   Intl.DateTimeFormat().resolvedOptions().timeZone,
+    referrer:   document.referrer || '',
+    pageUrl:    window.location.href,
+    clientTime: new Date().toLocaleString('en-US', {
+      weekday: 'short', year: 'numeric', month: 'short', day: 'numeric',
+      hour: '2-digit', minute: '2-digit',
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      timeZoneName: 'short',
+    }),
+  };
+}
+
+
 /* ── Contact Form ────────────────────────────────────────────── */
 (function initForm() {
   const form    = document.getElementById('contactForm');
@@ -298,42 +351,127 @@
   const btn     = document.getElementById('submitBtn');
   if (!form) return;
 
+  const SHEET_URL      = 'https://script.google.com/macros/s/AKfycbyJZWXW8IkoZlObu920GQov3cfoELjEpL0-ObdE_Zz8kYWVXhnswUdTCRJPfmO5cicu/exec';
+  const MIN_MS         = 3000;        // reject if submitted in < 3s
+  const MAX_MS         = 1800000;     // reject if form is > 30min stale
+  const RATE_KEY       = 'tws_rate';
+  const RATE_LIMIT     = 3;           // max submissions per browser per hour
+  const RATE_WINDOW_MS = 3600000;
+
+  // Timestamp when the form section is first rendered
+  const _renderedAt = Date.now();
+
+  function sanitize(str) {
+    return str.replace(/<[^>]*>/g, '').replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+    }[c])).trim();
+  }
+
+  function isRateLimited() {
+    try {
+      const raw   = localStorage.getItem(RATE_KEY);
+      const entry = raw ? JSON.parse(raw) : { count: 0, since: Date.now() };
+      if (Date.now() - entry.since > RATE_WINDOW_MS) {
+        localStorage.removeItem(RATE_KEY);
+        return false;
+      }
+      return entry.count >= RATE_LIMIT;
+    } catch { return false; }
+  }
+
+  function recordSubmission() {
+    try {
+      const raw   = localStorage.getItem(RATE_KEY);
+      const entry = raw ? JSON.parse(raw) : { count: 0, since: Date.now() };
+      entry.count++;
+      localStorage.setItem(RATE_KEY, JSON.stringify(entry));
+    } catch { /* storage unavailable */ }
+  }
+
+  function showError(msg) {
+    btn.disabled = false;
+    btn.querySelector('.btn-submit__text').textContent = 'Send Inquiry';
+    const err = form.querySelector('.form-error') || document.createElement('p');
+    err.className   = 'form-error';
+    err.textContent = msg;
+    err.style.cssText = 'color:#b54a2a;font-size:.8rem;margin-top:.75rem;font-family:var(--font-ui);';
+    if (!form.querySelector('.form-error')) form.querySelector('.form-submit').after(err);
+  }
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    // Basic validation
+    // Remove any previous error
+    form.querySelector('.form-error')?.remove();
+
+    // ── Layer 1: Honeypot ──────────────────────────────────────
+    const hp = form.querySelector('#website');
+    if (hp && hp.value) return; // silently drop — bot filled the hidden field
+
+    // ── Layer 2: Required field validation ────────────────────
     const required = form.querySelectorAll('[required]');
     let valid = true;
-
     required.forEach(input => {
       input.style.borderColor = '';
-      if (!input.value.trim()) {
-        input.style.borderColor = '#b54a2a';
-        valid = false;
-      }
+      if (!input.value.trim()) { input.style.borderColor = '#b54a2a'; valid = false; }
     });
-
     if (!valid) return;
 
-    // Simulate submission (swap with real API call)
+    // ── Layer 3: Email format ─────────────────────────────────
+    const emailVal = form.email.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(emailVal)) {
+      form.email.style.borderColor = '#b54a2a';
+      return;
+    }
+
+    // ── Layer 4: Timing check ─────────────────────────────────
+    const elapsed = Date.now() - _renderedAt;
+    if (elapsed < MIN_MS) return; // too fast — silent drop
+    if (elapsed > MAX_MS) {
+      showError('Your session has expired. Please refresh the page and try again.');
+      return;
+    }
+
+    // ── Layer 5: Browser-side rate limit ─────────────────────
+    if (isRateLimited()) {
+      showError('Too many submissions. Please wait before trying again.');
+      return;
+    }
+
     btn.disabled = true;
     btn.querySelector('.btn-submit__text').textContent = 'Sending…';
 
-    setTimeout(() => {
-      form.querySelectorAll('.form-input').forEach(el => el.value = '');
-      btn.style.display = 'none';
-      if (success) {
-        success.classList.add('visible');
-        success.style.display = 'flex';
-      }
-    }, 1200);
+    const payload = {
+      firstName: sanitize(form.firstName.value),
+      lastName:  sanitize(form.lastName.value),
+      email:     sanitize(emailVal),
+      phone:     sanitize(form.phone.value),
+      company:   sanitize(form.company.value),
+      message:   sanitize(form.message.value),
+      _hp:         (hp && hp.value) ? hp.value : '',
+      _renderedAt: _renderedAt,
+      ...getClientMeta(),
+    };
+
+    fetch(SHEET_URL, {
+      method: 'POST',
+      mode:   'no-cors',
+      body:   JSON.stringify(payload),
+    })
+      .then(() => {
+        recordSubmission();
+        form.querySelectorAll('.form-input').forEach(el => el.value = '');
+        btn.style.display = 'none';
+        if (success) { success.classList.add('visible'); success.style.display = 'flex'; }
+      })
+      .catch(() => {
+        showError('Something went wrong. Please try again or contact us directly.');
+      });
   });
 
   // Live validation feedback
   form.querySelectorAll('.form-input').forEach(input => {
-    input.addEventListener('input', () => {
-      input.style.borderColor = '';
-    });
+    input.addEventListener('input', () => { input.style.borderColor = ''; });
   });
 })();
 
@@ -877,6 +1015,90 @@
   document.getElementById('pfCarouselViewport').addEventListener('mouseleave', () => { cPaused = false; });
   let pfResizeT;
   window.addEventListener('resize', () => { clearTimeout(pfResizeT); pfResizeT = setTimeout(cResize, 100); });
+})();
+
+
+/* ── Stores Carousel ── */
+(function () {
+  const track   = document.getElementById('storesCarouselTrack');
+  const viewport = document.getElementById('storesCarouselViewport');
+  const prevBtn = document.getElementById('storesPrev');
+  const nextBtn = document.getElementById('storesNext');
+  const dotsEl  = document.getElementById('storesDots');
+  if (!track) return;
+
+  const GAP = 24;
+  let idx = 0;
+  let paused = false;
+  let timer;
+
+  function visible() {
+    const w = window.innerWidth;
+    if (w >= 1024) return 3;
+    if (w >= 640)  return 2;
+    return 1;
+  }
+
+  function cardW() {
+    return (viewport.offsetWidth - (visible() - 1) * GAP) / visible();
+  }
+
+  const cards = track.querySelectorAll('.store-card');
+  const steps = Math.ceil(cards.length / visible());
+
+  function setWidths() {
+    const w = cardW();
+    cards.forEach(c => { c.style.flex = `0 0 ${w}px`; });
+  }
+
+  function buildDots() {
+    dotsEl.innerHTML = '';
+    const count = Math.ceil(cards.length / visible());
+    for (let i = 0; i < count; i++) {
+      const d = document.createElement('button');
+      d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', `Go to store ${i + 1}`);
+      d.addEventListener('click', () => goTo(i));
+      dotsEl.appendChild(d);
+    }
+  }
+
+  function goTo(n) {
+    const count = Math.ceil(cards.length / visible());
+    idx = Math.max(0, Math.min(n, count - 1));
+    track.style.transform = `translateX(-${idx * (cardW() + GAP)}px)`;
+    prevBtn.disabled = idx === 0;
+    nextBtn.disabled = idx === count - 1;
+    dotsEl.querySelectorAll('.carousel-dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+  }
+
+  function resize() {
+    setWidths();
+    buildDots();
+    goTo(0);
+  }
+
+  function resetTimer() {
+    clearInterval(timer);
+    timer = setInterval(() => {
+      if (paused) return;
+      const count = Math.ceil(cards.length / visible());
+      goTo(idx < count - 1 ? idx + 1 : 0);
+    }, 4000);
+  }
+
+  setWidths();
+  buildDots();
+  goTo(0);
+  resetTimer();
+
+  prevBtn.addEventListener('click', () => { goTo(idx - 1); resetTimer(); });
+  nextBtn.addEventListener('click', () => { goTo(idx + 1); resetTimer(); });
+  viewport.addEventListener('mouseenter', () => { paused = true; });
+  viewport.addEventListener('mouseleave', () => { paused = false; });
+
+  let resizeT;
+  window.addEventListener('resize', () => { clearTimeout(resizeT); resizeT = setTimeout(resize, 100); });
 })();
 
 

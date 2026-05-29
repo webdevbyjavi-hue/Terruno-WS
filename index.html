@@ -27,6 +27,7 @@
         <li><a href="#mission" class="nav__link">Mission</a></li>
         <li><a href="#regions" class="nav__link">Regions</a></li>
         <li><a href="#portfolio" class="nav__link">Portfolio</a></li>
+        <li><a href="#where-to-find-us" class="nav__link">Where to Find Us</a></li>
         <li><a href="#team" class="nav__link">Team</a></li>
         <li><a href="#contact" class="nav__cta btn-primary">Partner With Us</a></li>
       </ul>
@@ -43,6 +44,7 @@
     <a href="#mission" class="nav__mobile-link">Mission</a>
     <a href="#regions" class="nav__mobile-link">Regions</a>
     <a href="#portfolio" class="nav__mobile-link">Portfolio</a>
+    <a href="#where-to-find-us" class="nav__mobile-link">Where to Find Us</a>
     <a href="#team" class="nav__mobile-link">Team</a>
     <a href="#contact" class="nav__mobile-link nav__mobile-cta">Partner With Us</a>
   </div>
@@ -123,7 +125,7 @@
 
       <div class="story__visual reveal">
         <div class="story__frame">
-          <img class="story__photo" src="assets/daniel_miranda.webp" alt="Daniel Miranda, founder of Terruno Wine & Spirits, in a vineyard holding a glass of wine"/>
+          <img class="story__photo" src="assets/hero2.jpeg" alt="Daniel Miranda, founder of Terruno Wine & Spirits, in a vineyard holding a glass of wine"/>
         </div>
         <div class="story__badge">
           <span class="story__badge-est">Est.</span>
@@ -284,6 +286,282 @@
       </div>
     </div>
 
+  </section>
+
+
+  <!-- ============================================================
+       WHERE TO FIND US
+  ============================================================ -->
+  <section class="section stores" id="stores">
+    <div class="container stores__header">
+      <p class="section-label reveal">Available Near You</p>
+      <h2 class="section-title reveal">Where to Find Us</h2>
+      <p class="stores__subtitle reveal">Discover Terruno wines and spirits at these carefully selected fine dining restaurants and premium retailers across New York.</p>
+    </div>
+
+    <!-- Infinite marquee — 9 cards duplicated for seamless CSS loop -->
+    <!-- Each card is 288px wide, gap is 24px → one set = 9×312 = 2808px (matches @keyframes) -->
+    <div class="stores-marquee" role="region" aria-label="Our partner locations">
+      <div class="stores-marquee__fade stores-marquee__fade--left" aria-hidden="true"></div>
+      <div class="stores-marquee__fade stores-marquee__fade--right" aria-hidden="true"></div>
+      <div class="stores-marquee__track">
+
+        <!-- ── Set 1 (accessible) ── -->
+        <div class="venue-card">
+          <div class="venue-card__img venue-card__img--nyc" aria-hidden="true">
+            <img src="assets/where-to-find-us/comal.webp" alt="Comal" class="venue-card__photo">
+          </div>
+          <div class="venue-card__body">
+            <h3 class="venue-card__name">Comal</h3>
+            <span class="venue-card__area">NYC</span>
+            <a class="venue-card__maps-btn" href="https://www.google.com/maps/search/?api=1&query=Comal+New+York+City" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5A6.5 6.5 0 1 0 14.5 8 6.507 6.507 0 0 0 8 1.5zm0 1A5.5 5.5 0 1 1 2.5 8 5.506 5.506 0 0 1 8 2.5zm0 2A1.5 1.5 0 1 0 9.5 6 1.502 1.502 0 0 0 8 4.5zm-2.5 5.5a2.5 2.5 0 0 1 5 0" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              View on Google Maps
+            </a>
+          </div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card__img venue-card__img--nyc" aria-hidden="true">
+            <img src="assets/where-to-find-us/roma_liquors.png" alt="Roma Wines &amp; Liquors" class="venue-card__photo">
+          </div>
+          <div class="venue-card__body">
+            <h3 class="venue-card__name">Roma Wines &amp; Liquors</h3>
+            <span class="venue-card__area">NYC</span>
+            <a class="venue-card__maps-btn" href="https://www.google.com/maps/search/?api=1&query=Roma+Wines+%26+Liquors+New+York" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5A6.5 6.5 0 1 0 14.5 8 6.507 6.507 0 0 0 8 1.5zm0 1A5.5 5.5 0 1 1 2.5 8 5.506 5.506 0 0 1 8 2.5zm0 2A1.5 1.5 0 1 0 9.5 6 1.502 1.502 0 0 0 8 4.5zm-2.5 5.5a2.5 2.5 0 0 1 5 0" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              View on Google Maps
+            </a>
+          </div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card__img venue-card__img--nyc" aria-hidden="true">
+            <img src="assets/where-to-find-us/ambassador_wines.png" alt="Ambassador Wine &amp; Spirits" class="venue-card__photo">
+          </div>
+          <div class="venue-card__body">
+            <h3 class="venue-card__name">Ambassador Wine &amp; Spirits</h3>
+            <span class="venue-card__area">NYC</span>
+            <a class="venue-card__maps-btn" href="https://www.google.com/maps/search/?api=1&query=Ambassador+Wine+%26+Spirits+New+York" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5A6.5 6.5 0 1 0 14.5 8 6.507 6.507 0 0 0 8 1.5zm0 1A5.5 5.5 0 1 1 2.5 8 5.506 5.506 0 0 1 8 2.5zm0 2A1.5 1.5 0 1 0 9.5 6 1.502 1.502 0 0 0 8 4.5zm-2.5 5.5a2.5 2.5 0 0 1 5 0" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              View on Google Maps
+            </a>
+          </div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card__img venue-card__img--li" aria-hidden="true">
+            <img src="assets/where-to-find-us/Enology.png" alt="Enology Wine Bar &amp; Bistro" class="venue-card__photo">
+          </div>
+          <div class="venue-card__body">
+            <h3 class="venue-card__name">Enology Wine Bar &amp; Bistro</h3>
+            <span class="venue-card__area">Long Island</span>
+            <a class="venue-card__maps-btn" href="https://www.google.com/maps/search/?api=1&query=Enology+Wine+Bar+%26+Bistro" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5A6.5 6.5 0 1 0 14.5 8 6.507 6.507 0 0 0 8 1.5zm0 1A5.5 5.5 0 1 1 2.5 8 5.506 5.506 0 0 1 8 2.5zm0 2A1.5 1.5 0 1 0 9.5 6 1.502 1.502 0 0 0 8 4.5zm-2.5 5.5a2.5 2.5 0 0 1 5 0" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              View on Google Maps
+            </a>
+          </div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card__img venue-card__img--li" aria-hidden="true">
+            <img src="assets/where-to-find-us/lakeside_wines.png" alt="Lake Side Emotions" class="venue-card__photo">
+          </div>
+          <div class="venue-card__body">
+            <h3 class="venue-card__name">Lake Side Emotions</h3>
+            <span class="venue-card__area">Long Island</span>
+            <a class="venue-card__maps-btn" href="https://www.google.com/maps/search/?api=1&query=Lake+Side+Emotions+Wine+Boutique" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5A6.5 6.5 0 1 0 14.5 8 6.507 6.507 0 0 0 8 1.5zm0 1A5.5 5.5 0 1 1 2.5 8 5.506 5.506 0 0 1 8 2.5zm0 2A1.5 1.5 0 1 0 9.5 6 1.502 1.502 0 0 0 8 4.5zm-2.5 5.5a2.5 2.5 0 0 1 5 0" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              View on Google Maps
+            </a>
+          </div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card__img venue-card__img--li" aria-hidden="true">
+            <img src="assets/where-to-find-us/ixchel.png" alt="Ixchel Mexican Cuisine" class="venue-card__photo">
+          </div>
+          <div class="venue-card__body">
+            <h3 class="venue-card__name">Ixchel Mexican Cuisine</h3>
+            <span class="venue-card__area">Long Island</span>
+            <a class="venue-card__maps-btn" href="https://www.google.com/maps/search/?api=1&query=IXCHEL+Mexican+Cuisine+Long+Island" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5A6.5 6.5 0 1 0 14.5 8 6.507 6.507 0 0 0 8 1.5zm0 1A5.5 5.5 0 1 1 2.5 8 5.506 5.506 0 0 1 8 2.5zm0 2A1.5 1.5 0 1 0 9.5 6 1.502 1.502 0 0 0 8 4.5zm-2.5 5.5a2.5 2.5 0 0 1 5 0" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              View on Google Maps
+            </a>
+          </div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card__img venue-card__img--hamptons" aria-hidden="true">
+            <img src="assets/where-to-find-us/verano.png" alt="El Verano" class="venue-card__photo">
+          </div>
+          <div class="venue-card__body">
+            <h3 class="venue-card__name">El Verano</h3>
+            <span class="venue-card__area">Hamptons</span>
+            <a class="venue-card__maps-btn" href="https://www.google.com/maps/search/?api=1&query=El+Verano+Hamptons+New+York" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5A6.5 6.5 0 1 0 14.5 8 6.507 6.507 0 0 0 8 1.5zm0 1A5.5 5.5 0 1 1 2.5 8 5.506 5.506 0 0 1 8 2.5zm0 2A1.5 1.5 0 1 0 9.5 6 1.502 1.502 0 0 0 8 4.5zm-2.5 5.5a2.5 2.5 0 0 1 5 0" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              View on Google Maps
+            </a>
+          </div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card__img venue-card__img--hamptons" aria-hidden="true">
+            <img src="assets/where-to-find-us/wainscott.png" alt="Wainscott Main Wine &amp; Spirits" class="venue-card__photo">
+          </div>
+          <div class="venue-card__body">
+            <h3 class="venue-card__name">Wainscott Main Wine &amp; Spirits</h3>
+            <span class="venue-card__area">Hamptons</span>
+            <a class="venue-card__maps-btn" href="https://www.google.com/maps/search/?api=1&query=Wainscott+Main+Wine+%26+Spirits" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5A6.5 6.5 0 1 0 14.5 8 6.507 6.507 0 0 0 8 1.5zm0 1A5.5 5.5 0 1 1 2.5 8 5.506 5.506 0 0 1 8 2.5zm0 2A1.5 1.5 0 1 0 9.5 6 1.502 1.502 0 0 0 8 4.5zm-2.5 5.5a2.5 2.5 0 0 1 5 0" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              View on Google Maps
+            </a>
+          </div>
+        </div>
+
+        <div class="venue-card">
+          <div class="venue-card__img venue-card__img--hamptons" aria-hidden="true">
+            <img src="assets/where-to-find-us/american_hotel.png" alt="The American Hotel" class="venue-card__photo">
+          </div>
+          <div class="venue-card__body">
+            <h3 class="venue-card__name">The American Hotel</h3>
+            <span class="venue-card__area">Hamptons</span>
+            <a class="venue-card__maps-btn" href="https://www.google.com/maps/search/?api=1&query=The+American+Hotel+Sag+Harbor" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5A6.5 6.5 0 1 0 14.5 8 6.507 6.507 0 0 0 8 1.5zm0 1A5.5 5.5 0 1 1 2.5 8 5.506 5.506 0 0 1 8 2.5zm0 2A1.5 1.5 0 1 0 9.5 6 1.502 1.502 0 0 0 8 4.5zm-2.5 5.5a2.5 2.5 0 0 1 5 0" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              View on Google Maps
+            </a>
+          </div>
+        </div>
+
+        <!-- ── Set 2 — decorative duplicate for seamless loop ── -->
+        <div class="venue-card" aria-hidden="true">
+          <div class="venue-card__img venue-card__img--nyc">
+            <img src="assets/where-to-find-us/comal.webp" alt="Comal" class="venue-card__photo">
+          </div>
+          <div class="venue-card__body">
+            <h3 class="venue-card__name">Comal</h3>
+            <span class="venue-card__area">NYC</span>
+            <a class="venue-card__maps-btn" href="https://www.google.com/maps/search/?api=1&query=Comal+New+York+City" target="_blank" rel="noopener noreferrer" tabindex="-1">
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5A6.5 6.5 0 1 0 14.5 8 6.507 6.507 0 0 0 8 1.5zm0 1A5.5 5.5 0 1 1 2.5 8 5.506 5.506 0 0 1 8 2.5zm0 2A1.5 1.5 0 1 0 9.5 6 1.502 1.502 0 0 0 8 4.5zm-2.5 5.5a2.5 2.5 0 0 1 5 0" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              View on Google Maps
+            </a>
+          </div>
+        </div>
+
+        <div class="venue-card" aria-hidden="true">
+          <div class="venue-card__img venue-card__img--nyc">
+            <img src="assets/where-to-find-us/roma_liquors.png" alt="Roma Wines &amp; Liquors" class="venue-card__photo">
+          </div>
+          <div class="venue-card__body">
+            <h3 class="venue-card__name">Roma Wines &amp; Liquors</h3>
+            <span class="venue-card__area">NYC</span>
+            <a class="venue-card__maps-btn" href="https://www.google.com/maps/search/?api=1&query=Roma+Wines+%26+Liquors+New+York" target="_blank" rel="noopener noreferrer" tabindex="-1">
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5A6.5 6.5 0 1 0 14.5 8 6.507 6.507 0 0 0 8 1.5zm0 1A5.5 5.5 0 1 1 2.5 8 5.506 5.506 0 0 1 8 2.5zm0 2A1.5 1.5 0 1 0 9.5 6 1.502 1.502 0 0 0 8 4.5zm-2.5 5.5a2.5 2.5 0 0 1 5 0" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              View on Google Maps
+            </a>
+          </div>
+        </div>
+
+        <div class="venue-card" aria-hidden="true">
+          <div class="venue-card__img venue-card__img--nyc">
+            <img src="assets/where-to-find-us/ambassador_wines.png" alt="Ambassador Wine &amp; Spirits" class="venue-card__photo">
+          </div>
+          <div class="venue-card__body">
+            <h3 class="venue-card__name">Ambassador Wine &amp; Spirits</h3>
+            <span class="venue-card__area">NYC</span>
+            <a class="venue-card__maps-btn" href="https://www.google.com/maps/search/?api=1&query=Ambassador+Wine+%26+Spirits+New+York" target="_blank" rel="noopener noreferrer" tabindex="-1">
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5A6.5 6.5 0 1 0 14.5 8 6.507 6.507 0 0 0 8 1.5zm0 1A5.5 5.5 0 1 1 2.5 8 5.506 5.506 0 0 1 8 2.5zm0 2A1.5 1.5 0 1 0 9.5 6 1.502 1.502 0 0 0 8 4.5zm-2.5 5.5a2.5 2.5 0 0 1 5 0" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              View on Google Maps
+            </a>
+          </div>
+        </div>
+
+        <div class="venue-card" aria-hidden="true">
+          <div class="venue-card__img venue-card__img--li">
+            <img src="assets/where-to-find-us/Enology.png" alt="Enology Wine Bar &amp; Bistro" class="venue-card__photo">
+          </div>
+          <div class="venue-card__body">
+            <h3 class="venue-card__name">Enology Wine Bar &amp; Bistro</h3>
+            <span class="venue-card__area">Long Island</span>
+            <a class="venue-card__maps-btn" href="https://www.google.com/maps/search/?api=1&query=Enology+Wine+Bar+%26+Bistro" target="_blank" rel="noopener noreferrer" tabindex="-1">
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5A6.5 6.5 0 1 0 14.5 8 6.507 6.507 0 0 0 8 1.5zm0 1A5.5 5.5 0 1 1 2.5 8 5.506 5.506 0 0 1 8 2.5zm0 2A1.5 1.5 0 1 0 9.5 6 1.502 1.502 0 0 0 8 4.5zm-2.5 5.5a2.5 2.5 0 0 1 5 0" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              View on Google Maps
+            </a>
+          </div>
+        </div>
+
+        <div class="venue-card" aria-hidden="true">
+          <div class="venue-card__img venue-card__img--li">
+            <img src="assets/where-to-find-us/lakeside_wines.png" alt="Lake Side Emotions" class="venue-card__photo">
+          </div>
+          <div class="venue-card__body">
+            <h3 class="venue-card__name">Lake Side Emotions</h3>
+            <span class="venue-card__area">Long Island</span>
+            <a class="venue-card__maps-btn" href="https://www.google.com/maps/search/?api=1&query=Lake+Side+Emotions+Wine+Boutique" target="_blank" rel="noopener noreferrer" tabindex="-1">
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5A6.5 6.5 0 1 0 14.5 8 6.507 6.507 0 0 0 8 1.5zm0 1A5.5 5.5 0 1 1 2.5 8 5.506 5.506 0 0 1 8 2.5zm0 2A1.5 1.5 0 1 0 9.5 6 1.502 1.502 0 0 0 8 4.5zm-2.5 5.5a2.5 2.5 0 0 1 5 0" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              View on Google Maps
+            </a>
+          </div>
+        </div>
+
+        <div class="venue-card" aria-hidden="true">
+          <div class="venue-card__img venue-card__img--li">
+            <img src="assets/where-to-find-us/ixchel.png" alt="Ixchel Mexican Cuisine" class="venue-card__photo">
+          </div>
+          <div class="venue-card__body">
+            <h3 class="venue-card__name">Ixchel Mexican Cuisine</h3>
+            <span class="venue-card__area">Long Island</span>
+            <a class="venue-card__maps-btn" href="https://www.google.com/maps/search/?api=1&query=IXCHEL+Mexican+Cuisine+Long+Island" target="_blank" rel="noopener noreferrer" tabindex="-1">
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5A6.5 6.5 0 1 0 14.5 8 6.507 6.507 0 0 0 8 1.5zm0 1A5.5 5.5 0 1 1 2.5 8 5.506 5.506 0 0 1 8 2.5zm0 2A1.5 1.5 0 1 0 9.5 6 1.502 1.502 0 0 0 8 4.5zm-2.5 5.5a2.5 2.5 0 0 1 5 0" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              View on Google Maps
+            </a>
+          </div>
+        </div>
+
+        <div class="venue-card" aria-hidden="true">
+          <div class="venue-card__img venue-card__img--hamptons">
+            <img src="assets/where-to-find-us/verano.png" alt="El Verano" class="venue-card__photo">
+          </div>
+          <div class="venue-card__body">
+            <h3 class="venue-card__name">El Verano</h3>
+            <span class="venue-card__area">Hamptons</span>
+            <a class="venue-card__maps-btn" href="https://www.google.com/maps/search/?api=1&query=El+Verano+Hamptons+New+York" target="_blank" rel="noopener noreferrer" tabindex="-1">
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5A6.5 6.5 0 1 0 14.5 8 6.507 6.507 0 0 0 8 1.5zm0 1A5.5 5.5 0 1 1 2.5 8 5.506 5.506 0 0 1 8 2.5zm0 2A1.5 1.5 0 1 0 9.5 6 1.502 1.502 0 0 0 8 4.5zm-2.5 5.5a2.5 2.5 0 0 1 5 0" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              View on Google Maps
+            </a>
+          </div>
+        </div>
+
+        <div class="venue-card" aria-hidden="true">
+          <div class="venue-card__img venue-card__img--hamptons">
+            <img src="assets/where-to-find-us/wainscott.png" alt="Wainscott Main Wine &amp; Spirits" class="venue-card__photo">
+          </div>
+          <div class="venue-card__body">
+            <h3 class="venue-card__name">Wainscott Main Wine &amp; Spirits</h3>
+            <span class="venue-card__area">Hamptons</span>
+            <a class="venue-card__maps-btn" href="https://www.google.com/maps/search/?api=1&query=Wainscott+Main+Wine+%26+Spirits" target="_blank" rel="noopener noreferrer" tabindex="-1">
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5A6.5 6.5 0 1 0 14.5 8 6.507 6.507 0 0 0 8 1.5zm0 1A5.5 5.5 0 1 1 2.5 8 5.506 5.506 0 0 1 8 2.5zm0 2A1.5 1.5 0 1 0 9.5 6 1.502 1.502 0 0 0 8 4.5zm-2.5 5.5a2.5 2.5 0 0 1 5 0" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              View on Google Maps
+            </a>
+          </div>
+        </div>
+
+        <div class="venue-card" aria-hidden="true">
+          <div class="venue-card__img venue-card__img--hamptons">
+            <img src="assets/where-to-find-us/american_hotel.png" alt="The American Hotel" class="venue-card__photo">
+          </div>
+          <div class="venue-card__body">
+            <h3 class="venue-card__name">The American Hotel</h3>
+            <span class="venue-card__area">Hamptons</span>
+            <a class="venue-card__maps-btn" href="https://www.google.com/maps/search/?api=1&query=The+American+Hotel+Sag+Harbor" target="_blank" rel="noopener noreferrer" tabindex="-1">
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5A6.5 6.5 0 1 0 14.5 8 6.507 6.507 0 0 0 8 1.5zm0 1A5.5 5.5 0 1 1 2.5 8 5.506 5.506 0 0 1 8 2.5zm0 2A1.5 1.5 0 1 0 9.5 6 1.502 1.502 0 0 0 8 4.5zm-2.5 5.5a2.5 2.5 0 0 1 5 0" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+              View on Google Maps
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </section>
 
 
@@ -452,6 +730,13 @@
             <textarea id="message" name="message" class="form-input form-textarea" rows="5"></textarea>
           </div>
         </div>
+
+        <!-- Honeypot: invisible to humans, bots fill it in — do not remove -->
+        <div style="position:absolute;left:-9999px;height:0;overflow:hidden;" aria-hidden="true">
+          <label for="website">Website (leave blank)</label>
+          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+
         <div class="form-submit">
           <button type="submit" class="btn-primary btn-submit" id="submitBtn">
             <span class="btn-submit__text">Send Inquiry</span>
